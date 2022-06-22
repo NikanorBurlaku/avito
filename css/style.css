@@ -1,0 +1,136 @@
+:root{
+    --yellow: rgba(245, 176, 64, 1);
+
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+
+*{
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+}
+.header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+
+}
+.container {
+    width: 80%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+.header__nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header__link {
+    padding: 12px 0;
+}
+.favorite {
+}
+.header__img {
+}
+.add,
+.favorite{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.header__city {
+    opacity: 0.5;
+}
+.main .container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
+}
+.acide {
+    width: 20%;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+.logo__img{
+
+}
+.logo__text {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 2rem;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+}
+.categories__acide {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.link__acide {
+}
+.main__link {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.article {
+    width: 75%;
+}
+.article__form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.article__input__search {
+    padding: 10px 30px;
+    border-radius: 4px;
+    width: 50%;
+    border: 1px solid #000;
+}
+.article__select {
+    border: none;
+}
+.article__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--yellow);
+    color: #fff;
+    padding: 10px;
+    width: 20%;
+    border: none;
+    border-radius: 4px;
+}
+.tov_section{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.tov {
+    width: 32%;
+    height: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 30px;
+}
+.tov__img {
+    width: 100%;
+    height: 15vw;
+    background: #C4C4C4;
+    border-radius: 4px;
+}
+.tov__head {
+    font-size: 1.3rem;
+    margin-top: 15px;
+}
+.tov__price {
+    margin-top: 10px;
+}
+.tov__sity {
+    margin-top: 5px;
+}
