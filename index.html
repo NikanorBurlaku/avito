@@ -8,6 +8,9 @@
     <title>Доска объявлений</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
     <header class="header">
         <div class="container">
             <ul class="header__nav">
@@ -17,7 +20,7 @@
                             class="header__img">избранное</a></li>
                 <li><a href="#" class="header__link add"><img src="images/add.svg" class="header__img"> подать
                         объявление</a></li>
-                <li><a href="#" class="header__link">войти / зарегистрироваться</a></li>
+                <li><a href="#" id="login" class="header__link">войти</a> / <a href="#" class="header__link" id="register">зарегистрироваться</a></li>
                 <li><a href="#" class="header__link">ваш город: <span class="header__city">Краснодар</span></a></li>
             </ul>
         </div>
@@ -100,10 +103,31 @@
             </article>
         </div>
     </main>
-</head>
-
-<body>
-
+        <div class="login__popup" style="display: none;">
+            <div class="login__block">
+                <h2 class="login__title">вход</h2>
+                <form action="#" class="login__form" method="post">
+                    <input type="text" class="login__input" id="login__login" placeholder="телефон или электронная почта">
+                    <input type="password" class="login__input"  id="login__password" placeholder="пароль" autocomplete="off">
+                    <input type="submit" class="login__submit" value="войти">
+                </form>
+                <button class="login__href">зарегистрироваться</button>
+                <span class="login__close"><img src="images/close.svg" alt=""></span>
+            </div>   
+        </div>
+        <div class="register__popup" style="display: block;">
+            <div class="login__block">
+                <h2 class="login__title"></h2>
+                <form action="#" class="login__form" method="post">
+                    <input type="text" class="login__input" id="register__login" placeholder="телефон или электронная почта">
+                    <input type="password"  class="login__input" id="register__password" placeholder="пароль" autocomplete="off">
+                    <input type="submit" class="login__submit" value="войти">
+                </form>
+                <button class="login__href">войти</button>
+                <span class="register__close"><img src="images/close.svg" alt=""></span>
+            </div>   
+        </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
