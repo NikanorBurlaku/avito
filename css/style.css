@@ -213,3 +213,38 @@ body{
 .register__close:hover{
     cursor: pointer;
 }
+.product__section {
+    width: 100%;
+}
+.product__block {
+}
+.product__img {
+}
+.product__title {
+}
+.product__name {
+}
+.product__date {
+}
+.product__decription {
+}
+.product__location {
+}
+.contact__block {
+}
+.product__price {
+}
+.show__number {
+}
+.send__message {
+}
+.salesmam__block {
+}
+.salesman__img {
+}
+.salesman__name {
+}
+.salesman__date {
+}
+.salesman__review {
+}
