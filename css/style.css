@@ -225,38 +225,81 @@ body{
 .product__img {
     display: block;
     width: 100%;
-    height: 15vw;
-    background: #C4C4C4;
+    height: auto;
     border-radius: 4px;
 }
 .product__title {
     display: flex;
     justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 .product__name {
+    font-size: 600;
+    font-size: 2vw;
 }
 .product__date {
+    font-size: 1vw;
+    color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+
 }
-.product__decription {
-}
+.product__decription,
 .product__location {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+.product__span{
+    width: 30%;
+    font-size: 1.2vw;
+
+}
+.product__text{
+    width: 70%;
+    font-size: 1.3vw;
+    font-size: 1.4vw;
 }
 .contact__block {
     width: 25%;
 }
 .product__price {
+    font-weight: 600;
+    font-size: 2vw;
+    margin-bottom: 20px;
 }
-.show__number {
-}
+.show__number, 
 .send__message {
+    background: var(--yellow);
+    border: var(--yellow);
+border-radius: 4px;
+width: 100%;
+padding: 10px;
+color: #fff;
+outline:none;
+margin-top: 20px;
 }
 .salesmam__block {
+    margin-top: 40px;display: grid; 
+    grid-auto-columns: 1fr; 
+    grid-template-columns: 0.5fr 1.5fr; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    gap: 5%; 
+    grid-template-areas: 
+      "salesman__img salesman__name"
+      "salesman__img salesman__date"
+      "salesman__img salesman__review"; 
+  }
+  .salesman__img { grid-area: salesman__img; width: 100%;
+
 }
-.salesman__img {
-}
-.salesman__name {
-}
-.salesman__date {
-}
-.salesman__review {
-}
+  .salesman__name { grid-area: salesman__name; 
+
+    font-size: 1.4vw;}
+  .salesman__date { grid-area: salesman__date; 
+font-size: 1vw;}
+  .salesman__review { grid-area: salesman__review; }
+  
