@@ -1,13 +1,12 @@
 
 <?php
 
-session_start();
 
-$link = require '../database/connect.php';
+$link = require './database/connect.php';
 $query1 = "SELECT * FROM product";
 
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
-$content = '';
+$content = ' <section class="tov_section">';
 
 for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row){
 
@@ -17,16 +16,16 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row){
 
     $href = strtolower(transliterate($row['title']));
 
-    $content .= "<a href='$href' class='product'>
-    <img src='product_img/{$row['link']}' alt='Product picture' class='product_img'>
-    <h2 class='title'>{$row['title']}</h2>
-    <p class='subtitle'>{$row['subtitle']}</p>
-    <p class='price'>Цена: {$row['price']} ₽</p>
-    <p class='date'>Дата: {$row['date']}</p>
-    <p class='user'>Продавец: {$user['name']} {$user['surname']}</p>   
+    $content .= "<a href='$href' class='tov'>
+    <span class='tov__img'></span>
+    <span class='tov__head'>{$row['title']}</span>
+    <span class='tov__price'>Цена: {$row['price']} ₽</span>
+    <span class='tov__date'>Дата: {$row['date']}</span>
+    <span class='tov__user'>Продавец: {$user['name']} {$user['surname']}</span>   
     </a>";
 
     }
+    $content .= '</section>';
     function transliterate($input){
         $gost = array(
         "а"=>"a","б"=>"b","в"=>"v","г"=>"g","д"=>"d",
@@ -54,62 +53,10 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row){
           'title' => 'список всех категорий',
           'content' => $content
       ];
-  
-      
+       
       return $page;
-}
 
 ?>
 
 
 
-<?php include 'layout/header.php'; ?>
-
-                <section class="tov_section">
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                    <a class="tov" href="product.php">
-                        <span class="tov__img"></span>
-                        <span class="tov__head">Стол компьютерный</span>
-                        <span class="tov__price">1000 ₽</span>
-                        <span class="tov__sity">Краснодар, р-н Карасунский</span>
-                        <span class="tov__sity">3 мая 16:20</span>
-                    </a>
-                </section>
-            </article>
-        </div>
-    
-<?php include 'layout/footer.php'; ?>

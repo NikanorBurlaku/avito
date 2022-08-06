@@ -1,4 +1,6 @@
-</main>
+</article>
+        </div>
+    </main>
     <div class="login__popup" style="display: none;">
         <div class="login__block">
             <h2 class="login__title">вход</h2>
