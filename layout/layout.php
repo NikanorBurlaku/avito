@@ -11,17 +11,14 @@
 </head>
 
 <body>
-    <header class="header">
+<header class="header">
         <div class="container">
             <ul class="header__nav">
-                <li><a href="#" class="header__link">помощь</a></li>
-                <li><a href="#" class="header__link">промокод</a></li>
-                <li><a href="#" class="header__link favorite"><img src="images/favorite.svg"
-                            class="header__img">избранное</a></li>
-                <li><a href="#" class="header__link add"><img src="images/add.svg" class="header__img"> подать
-                        объявление</a></li>
-                <li><a href="#" id="login" class="header__link">войти</a> / <a href="#" class="header__link" id="register">зарегистрироваться</a></li>
-                <li><a href="#" class="header__link">ваш город: <span class="header__city">Краснодар</span></a></li>
+                <li><a href="#" class="header__link">help</a></li>
+                <li><a href="#" class="header__link favorite"><img src="images/favorite.svg" class="header__img">favorites</a></li>
+                <li><a href="#" class="header__link add"><img src="images/add.svg" class="header__img">place an ad</a></li>
+                {{ auth }}
+                <li><a href="#" class="header__link">your sity: <span class="header__city">Chishinau</span></a></li>
             </ul>
         </div>
     </header>
@@ -65,7 +62,7 @@
                 </article>
         </div>
     </main>
-    <div class="login__popup" style="display: none;">
+    <!-- <div class="login__popup" style="display: none;">
         <div class="login__block">
             <h2 class="login__title">вход</h2>
             <form action="#" class="login__form" method="post">
@@ -77,21 +74,27 @@
             <button class="login__href">зарегистрироваться</button>
             <span class="login__close"><img src="images/close.svg" alt=""></span>
         </div>
-    </div>
-    <div class="register__popup" style="display: none;">
+    </div> -->
+    <!-- <div class="register__popup" style="display: none;">
         <div class="login__block">
-            <h2 class="login__title"></h2>
-            <form action="#" class="login__form" method="post">
-                <input type="text" class="login__input" id="register__login"
-                    placeholder="телефон или электронная почта">
-                <input type="password" class="login__input" id="register__password" placeholder="пароль"
-                    autocomplete="off">
-                <input type="submit" class="login__submit" value="войти">
+            <h2 class="login__title">Чтобы зарегистрироваться заполните поля</h2>
+            <form action="database/register.php" class="login__form" method="post">
+                <input type="text" class="login__input" name="login"
+                    placeholder="Логин" require>
+                <input type="password" class="login__input" name="password" placeholder="пароль" autocomplete="off" require>
+                <input type="password" class="login__input" name="password_confirm" placeholder="повторите пароль" autocomplete="off" require>
+                <input type="text" class="login__input" name="name"
+                    placeholder="имя" require>
+                <input type="text" class="login__input" name="surname"
+                    placeholder="фамилия" require>
+                <input type="email" class="login__input" name="email"
+                    placeholder="email" require>
+
+                <input type="submit" class="login__submit" value="зарегистрироваться">
             </form>
-            <button class="login__href">войти</button>
             <span class="register__close"><img src="images/close.svg" alt=""></span>
         </div>
-    </div>
+    </div> -->
     <script src="js/script.js"></script>
 </body>
 

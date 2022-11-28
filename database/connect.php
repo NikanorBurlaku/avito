@@ -1,11 +1,11 @@
-<?php
+<?php 
 
+    $host = 'localhost';
+    $user = 'root';
+    $pass = 'root';
+    $name = 'avito';
+    $link = mysqli_connect($host, $user, $pass, $name);
+    mysqli_query($link, "SET NAMES 'utf8'");
 
-$host = 'localhost'; // имя хоста
-$user = 'root';      // имя пользователя
-$pass = 'root';          // пароль
-$name = 'mydb';      // имя базы данных
-
-return mysqli_connect($host, $user, $pass, $name);
-
+    return $link
 ?>

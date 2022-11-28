@@ -20,7 +20,7 @@
                             class="header__img">избранное</a></li>
                 <li><a href="#" class="header__link add"><img src="images/add.svg" class="header__img"> подать
                         объявление</a></li>
-                <li><a href="#" id="login" class="header__link">войти</a> / <a href="#" class="header__link" id="register">зарегистрироваться</a></li>
+                <li>{{ auth }}</li>
                 <li><a href="#" class="header__link">ваш город: <span class="header__city">Краснодар</span></a></li>
             </ul>
         </div>
