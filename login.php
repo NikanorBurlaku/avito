@@ -33,7 +33,7 @@
                 <input type="password" name="password" class="login__input" id="login__password" placeholder="Password">
                 <input type="submit" class="login__submit" value="Enter">
             </form>
-            <button class="login__href">register</button>
+            <a href="register.php" class="login__href">sign in</a>
         </div>
     </div>
 
@@ -62,11 +62,7 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) {
         $_SESSION['auth'] = 'true';
         header('Location: index.php');
     } else {
-        echo "Неверный пароль";
+        echo "Неверный логин и/или пароль";
     }
-} else {
-
-    echo "Неверный логин и/или пароль";
-}
-
+} 
 ?>
