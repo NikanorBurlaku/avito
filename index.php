@@ -4,6 +4,7 @@ session_start();
 
 $url = $_SERVER['REQUEST_URI'];
 
+
 $route = '/login.php';
 if (preg_match("#$route#", $url, $params)) {
     require 'profile/login.php';
@@ -26,6 +27,7 @@ if (preg_match("#$route#", $url, $params)) {
     $layout = file_get_contents('layout/layout.php');
     $layout = str_replace('{{ title }}', $page['title'], $layout);
     $layout = str_replace('{{ content }}', $page['content'], $layout);
+    $layout = str_replace('{{ categories }}', $page['categories'], $layout);
     $layout = str_replace('{{ auth }}', $auth, $layout);
 
     echo $layout;

@@ -10,32 +10,34 @@ $content = ' <section class="tov_section">';
 
 for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
 
-    $query2 = "SELECT * FROM users WHERE id='{$row['user_id']}'";
+    $query2 = "SELECT * FROM user WHERE id='{$row['id_user']}'";
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
 
-    $content .= "<a href='$href' class='tov'>
+
+    $content .= "<a href='#' class='tov'>
     <span class='tov__img'></span>
-    <span class='tov__head'>{$row['title']}</span>
-    <span class='tov__price'>Цена: {$row['price']} ₽</span>
-    <span class='tov__date'>Дата: {$row['date']}</span>
-    <span class='tov__user'>Продавец: {$user['name']} {$user['surname']}</span>   
+    <span class='tov__head'>{$row['name']}</span>
+    <span class='tov__price'>Price: {$row['price']} $</span>
+    <span class='tov__date'>Date create: {$row['date_create']}</span>
+    <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span>   
     </a>";
 }
 
-$query3 = "SELECT * FROM category";
+$content .= '</section>';
+
+$query3 = "SELECT * FROM category ORDER BY name";
 $result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
 
 $categories = '';
 
 for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
-    $categories .= "<li><a href='$name'>$name</a></li>";
+    $row['name'] = strtolower($row['name']);
+    $categoryHref = str_replace('_', ' ', $row['name']); 
+    $categories .= "<li><a href='page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
-
-$content .= '</section>';
-
 $page = [
-    'title' => 'список всех категорий',
+    'title' => 'bulletin board',
     'content' => $content,
     'categories' => $categories
 ];

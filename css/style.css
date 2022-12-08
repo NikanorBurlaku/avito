@@ -18,7 +18,7 @@ body{
 
 }
 .container {
-    width: 80%;
+    width: 85%;
     max-width: 1920px;
     margin: 0 auto;
 }
@@ -49,7 +49,7 @@ body{
     padding-top: 50px;
 }
 .acide {
-    width: 20%;
+    width: 30%;
 }
 .logo {
     display: flex;
@@ -63,7 +63,7 @@ body{
 .logo__text {
     text-transform: uppercase;
     font-weight: 800;
-    font-size: 2rem;
+    font-size: 1.4rem;
     padding-bottom: 5px;
     border-bottom: 1px solid #000;
 }
@@ -73,14 +73,11 @@ body{
     flex-direction: column;
     gap: 10px;
 }
-.link__acide {
-}
 .main__link {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.3rem;
 }
 .article {
-    width: 75%;
+    width: 68%;
 }
 .article__form {
     display: flex;
@@ -89,9 +86,9 @@ body{
     flex-wrap: wrap;
 }
 .article__input__search {
-    padding: 10px 30px;
+    padding: 10px 15px;
     border-radius: 4px;
-    width: 50%;
+    width: 60%;
     border: 1px solid #000;
 }
 .article__select {
@@ -104,7 +101,7 @@ body{
     background: var(--yellow);
     color: #fff;
     padding: 10px;
-    width: 20%;
+    width: 25%;
     border: none;
     border-radius: 4px;
 }
