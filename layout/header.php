@@ -31,7 +31,7 @@
                 <a href="index.php" class="logo"><img src="images/logo.svg" class="logo__img"><span class="logo__text">Доска</span>
                 </a>
                 <ul class="categories__acide">
-                    <li><a href="#" class="link__acide main__link">Все категории</a></li>
+                    <li><a href="#" class="link__acide main__link">All categories</a></li>
                     <li><a href="#" class="link__acide">Электроника</a></li>
                     <li><a href="#" class="link__acide">Недвижимость</a></li>
                     <li><a href="#" class="link__acide">Транспорт</a></li>
@@ -45,7 +45,7 @@
                 <form action="" class="article__form" method="get">
                     <input type="search" class="article__input__search" placeholder="поиск">
                     <select class="article__select">
-                        <option value="Электроника">Все категории</option>
+                        <option value="Электроника">All categories</option>
                         <option value="Электроника">Электроника</option>
                         <option value="Электроника">Недвижимость</option>
                         <option value="Электроника">Транспорт</option>

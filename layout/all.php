@@ -8,7 +8,7 @@ $query1 = "SELECT * FROM product";
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
 $content = ' <section class="tov_section">';
 
-for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row){
+for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
 
     $query2 = "SELECT * FROM users WHERE id='{$row['user_id']}'";
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
@@ -21,16 +21,26 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row){
     <span class='tov__date'>Дата: {$row['date']}</span>
     <span class='tov__user'>Продавец: {$user['name']} {$user['surname']}</span>   
     </a>";
+}
 
-    }
-    $content .= '</section>';
-   
-        $page = [
-          'title' => 'список всех категорий',
-          'content' => $content
-      ];
-       
-      return $page;
+$query3 = "SELECT * FROM category";
+$result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
+
+$categories = '';
+
+for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
+    $categories .= "<li><a href='$name'>$name</a></li>";
+}
+
+$content .= '</section>';
+
+$page = [
+    'title' => 'список всех категорий',
+    'content' => $content,
+    'categories' => $categories
+];
+
+return $page;
 
 ?>
 
