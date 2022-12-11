@@ -6,7 +6,7 @@ $link = require './database/connect.php';
 $query1 = "SELECT *, category.name as catName, product.name as prodName FROM product
 LEFT JOIN 
 category ON category.id=product.id_categ
-WHERE ";
+WHERE category.name='$catSlug'";
 
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
 $content = ' <section class="tov_section">';
@@ -20,7 +20,7 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $catName = str_replace('_', ' ', $row['catName']);
     $prodName = str_replace('_', ' ', $row['prodName']);
 
-    $content .= "<a href='product/$catName/{$row['prodName']}' class='tov'>
+    $content .= "<a href='page/$catName/{$row['prodName']}' class='tov'>
         <span class='tov__img'></span>
         <span class='tov__head'>$prodName</span>
         <span class='tov__price'>Price: {$row['price']} $</span>
@@ -39,12 +39,13 @@ $categories = '';
 for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
     $row['name'] = strtolower($row['name']);
     $categoryHref = str_replace('_', ' ', $row['name']);
-    $categories .= "<li><a href='page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
+    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
-    'categories' => $categories
+    'categories' => $categories,
+    'url' => '../'
 ];
 
 return $page;

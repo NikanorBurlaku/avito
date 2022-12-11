@@ -19,7 +19,7 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $catName = str_replace('_', ' ', $row['catName']); 
     $prodName = str_replace('_', ' ', $row['prodName']);
 
-    $content .= "<a href='product/$catName/{$row['prodName']}' class='tov'>
+    $content .= "<a href='page/$catName/{$row['prodName']}' class='tov'>
     <span class='tov__img'></span>
     <span class='tov__head'>$prodName</span>
     <span class='tov__price'>Price: {$row['price']} $</span>
@@ -43,8 +43,10 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
-    'categories' => $categories
+    'categories' => $categories,
+    'url' => ''
 ];
+
 
 return $page;
 
