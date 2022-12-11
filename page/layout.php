@@ -11,9 +11,17 @@
 </head>
 
 <body>
-    <?php
-    include "layout/header.php";
-    ?>
+<header class="header">
+        <div class="container">
+            <ul class="header__nav">
+                <li><a href="index.php" class="header__link">help</a></li>
+                <li><a href="index.php" class="header__link favorite"><img src="images/favorite.svg" class="header__img">favorites</a></li>
+                <li><a href="add.php" class="header__link add"><img src="images/add.svg" class="header__img">place an ad</a></li>
+                {{ auth }}
+                <li><a href="index.php" class="header__link">your sity: <span class="header__city">Chishinau</span></a></li>
+            </ul>
+        </div>
+    </header>
     <main class="main">
         <div class="container">
             <acide class="acide">

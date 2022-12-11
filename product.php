@@ -1,4 +1,4 @@
-<?php include 'layout/header.php'; ?>
+<?php include 'page/header.php'; ?>
    
                 <section class="product__section">
                     <div class="product__block">
@@ -23,7 +23,7 @@
                         <h2 class="product__price">1000 ₽</h2>
                         <button class="show__number">показать телефон</button>
                         <button class="send__message">написать сообщение</button>
-                        <a href="#" class="salesmam__block">
+                        <a href="index.php" class="salesmam__block">
                             <img src="images/salesman.png" alt="" class="salesman__img">
                             <h3 class="salesman__name">Александр Столд</h3>
                             <span class="salesman__date">на surf с
@@ -35,4 +35,4 @@
             </article>
         </div>
    
-<?php include 'layout/footer.php'; ?>
+<?php include 'page/footer.php'; ?>
