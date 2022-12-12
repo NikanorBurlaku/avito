@@ -14,8 +14,8 @@
 <header class="header">
         <div class="container">
             <ul class="header__nav">
-                <li><a href="index.php" class="header__link">help</a></li>
-                <li><a href="index.php" class="header__link favorite"><img src="{{ url }}images/favorite.svg" class="header__img">favorites</a></li>
+                <li><a href="{{ url }}index.php" class="header__link">help</a></li>
+                <li><a href="{{ url }}index.php" class="header__link favorite"><img src="{{ url }}images/favorite.svg" class="header__img">favorites</a></li>
                 <li><a href="add.php" class="header__link add"><img src="{{ url }}images/add.svg" class="header__img">place an ad</a></li>
                 {{ auth }}
                 <li><a href="index.php" class="header__link">your sity: <span class="header__city">Chishinau</span></a></li>
@@ -25,7 +25,7 @@
     <main class="main">
         <div class="container">
             <acide class="acide">
-                <a href="index.php" class="logo"><img src="{{ url }}images/logo.svg" class="logo__img"><span class="logo__text">bulletin board</span>
+                <a href="{{ url }}index.php" class="logo"><img src="{{ url }}images/logo.svg" class="logo__img"><span class="logo__text">bulletin board</span>
                 </a>
                 <ul class="categories__acide">
                     <li><a href="index.php" class="link__acide main__link" style="text-transform: uppercase; font-weight:600">all categories</a></li>

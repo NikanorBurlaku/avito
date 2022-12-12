@@ -157,7 +157,7 @@ body{
     font-size: 2rem;
     margin-top: 20px;
 }
-.login__form {
+.form {
     margin-top: 50px;
     margin-bottom: 20px;
     display: flex;
@@ -166,20 +166,25 @@ body{
     width: 70%;
     gap: 20px;
 }
-.login__input,
-.login__submit{
+.form__input,
+.form__submit,
+.form__textarea,
+.form__select{
     width: 100%;
     padding: 10px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     font-size: 0.9rem;
 }
-.login__submit {
+.form__textarea{
+    resize: vertical;
+}
+.form__submit {
     background: var(--yellow);
     font-size: 1.2rem;
     color: #fff;
 }
-.login__href {
+.form__href {
     margin-top: 50px;
     text-align: center;
     width: 100%;
@@ -191,7 +196,7 @@ body{
     border-top: 1px solid rgba(0, 0, 0, 0.5);
     transition: .5s;
 }
-.login__href:hover{
+.form__href:hover{
     color: #fff;
     background: var(--blue);
 }
@@ -294,4 +299,15 @@ margin-top: 20px;
   .salesman__date { grid-area: salesman__date; 
 font-size: 1vw;}
   .salesman__review { grid-area: salesman__review; }
+  .error_text{
+    margin-top: 40px;
+    text-align: center;
+    font-size: 2rem;
+  }
+  .error_text a{
+    color: #f00;
+  }
+  .error_text a:hover{
+    text-decoration: underline;
+  }
   

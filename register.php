@@ -3,17 +3,17 @@
     <div class="register__popup">
         <div class="login__block">
             <h2 class="login__title">Sign up</h2>
-            <form action="" class="login__form" method="post">
-                <input type="text" class="login__input" name="login" placeholder="login" require>
-                <input type="password" class="login__input" name="password" placeholder="password" autocomplete="off" require>
-                <input type="password" class="login__input" name="confirm" placeholder="confirm" autocomplete="off" require>
-                <input type="text" class="login__input" name="name" placeholder="name" require>
-                <input type="text" class="login__input" name="surname" placeholder="surname">
-                <input type="email" class="login__input" name="email" placeholder="email" require>
+            <form action="" class="form" method="post">
+                <input type="text" class="form__input" name="login" placeholder="login" require>
+                <input type="password" class="form__input" name="password" placeholder="password" autocomplete="off" require>
+                <input type="password" class="form__input" name="confirm" placeholder="confirm" autocomplete="off" require>
+                <input type="text" class="form__input" name="name" placeholder="name" require>
+                <input type="text" class="form__input" name="surname" placeholder="surname">
+                <input type="email" class="form__input" name="email" placeholder="email" require>
 
-                <input type="submit" class="login__submit" value="sign in">
+                <input type="submit" class="form__submit" value="sign in">
             </form>
-            <a href="login.php" class="login__href">sign in</a>
+            <a href="login.php" class="form__href">sign in</a>
         </div>
     </div>
 
@@ -25,7 +25,6 @@
 <?php
 include "page/footer.php";
 
-session_start();
 
 
 if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_REQUEST['confirm'])) {

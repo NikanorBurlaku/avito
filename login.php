@@ -3,12 +3,12 @@
 <div class="login__popup">
     <div class="login__block">
         <h2 class="login__title">Sign in</h2>
-        <form action="" class="login__form" method="post">
-            <input type="text" name="login" class="login__input" id="login__login" placeholder="Login">
-            <input type="password" name="password" class="login__input" id="login__password" placeholder="Password">
-            <input type="submit" class="login__submit" value="Enter">
+        <form action="" class="form" method="post">
+            <input type="text" name="login" class="form__input" id="login__login" placeholder="Login">
+            <input type="password" name="password" class="form__input" id="login__password" placeholder="Password">
+            <input type="submit" class="form__submit" value="Enter">
         </form>
-        <a href="register.php" class="login__href">sign up</a>
+        <a href="register.php" class="form__href">sign up</a>
     </div>
 </div>
 
@@ -20,7 +20,6 @@
 include "page/footer.php";
 
 
-session_start();
 
 if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) {
 

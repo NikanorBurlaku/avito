@@ -6,13 +6,26 @@ $url = $_SERVER['REQUEST_URI'];
 $url = $_SERVER['REQUEST_URI'];
 $url = str_replace('/avito', '', $url);
 
-$route = '/login.php';
-if (preg_match("#$route#", $url, $params)) {
-    require 'profile/login.php';
-}
-$route = '/register.php';
-if (preg_match("#$route#", $url, $params)) 
-    require 'profile/register.php';
+
+if ($url == "/login.php" or $url == "/register.php" or $url == "/logout.php" or $url == "/add.php") {
+
+    $route = '/login.php';
+    if (preg_match("#$route#", $url, $params)) {
+        require_once 'login.php';
+    }
+
+    $route = '/register.php';
+    if (preg_match("#$route#", $url, $params))
+        require_once 'register.php';
+
+    $route = '/logout.php';
+    if (preg_match("#$route#", $url, $params))
+        require_once 'logout.php';
+
+    $route = '/add.php';
+    if (preg_match("#$route#", $url, $params))
+        require_once 'add.php';
+} else {
 
 
     echo "$url";
@@ -25,7 +38,7 @@ if (preg_match("#$route#", $url, $params))
         $page = include 'page/all.php';
     }
     $route = '/page/(?<countSlug>[a-zA-Z0-9_-]+)';
-    if(preg_match("#$route#", $url, $params)){
+    if (preg_match("#$route#", $url, $params)) {
         $page = include 'page/category.php';
     }
     if (!empty($_SESSION['auth'])) {
@@ -42,3 +55,4 @@ if (preg_match("#$route#", $url, $params))
     $layout = str_replace('{{ auth }}', $auth, $layout);
 
     echo $layout;
+}
