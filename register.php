@@ -30,7 +30,7 @@ include "page/footer.php";
 if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_REQUEST['confirm'])) {
 
     $login = $_REQUEST['login'];
-    $password = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
+    $password = password_hash($_REQUEST['password'], PASSWORD_DEFAULT); //хэшируем пароль
     $name = $_REQUEST['name'];
     $surname = $_REQUEST['surname'];
     $phone = '';

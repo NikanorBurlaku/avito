@@ -37,9 +37,13 @@ if ($url == "/login.php" or $url == "/register.php" or $url == "/logout.php" or 
     if (preg_match("#$route#", $url, $params)) {
         $page = include 'page/all.php';
     }
-    $route = '/page/(?<countSlug>[a-zA-Z0-9_-]+)';
+    $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)';
     if (preg_match("#$route#", $url, $params)) {
         $page = include 'page/category.php';
+    }
+    $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)/(?<prodSlug>[a-zA-Z0-9_-]+)';
+    if (preg_match("#$route#", $url, $params)) {
+        $page = include 'page/product.php';
     }
     if (!empty($_SESSION['auth'])) {
         $auth = '<a href="logout.php" id="logout" class="header__link">log out</a>';

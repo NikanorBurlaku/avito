@@ -21,7 +21,7 @@ include "page/footer.php";
 
 
 
-if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) {
+if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) { // проверяем наличие пароля и логина
 
     $login = $_REQUEST['login'];
     $password = $_REQUEST['password'];

@@ -1,6 +1,6 @@
 <?php
 
-$catSlug = $params['countSlug'];
+$catSlug = $params['catSlug'];
 
 $link = require './database/connect.php';
 $query1 = "SELECT *, category.name as catName, product.name as prodName FROM product
@@ -17,16 +17,16 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
 
-    $catName = str_replace('_', ' ', $row['catName']);
-    $prodName = str_replace('_', ' ', $row['prodName']);
+     $catName = str_replace('_', ' ', $row['catName']); 
+    $prodName = strtolower(str_replace(' ', '_', $row['prodName']));
 
-    $content .= "<a href='{{ url }}page/$catName/{$row['prodName']}' class='tov'>
-        <span class='tov__img'></span>
-        <span class='tov__head'>$prodName</span>
-        <span class='tov__price'>Price: {$row['price']} $</span>
-        <span class='tov__date'>Date create: {$row['date_create']}</span>
-        <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span>   
-        </a>";
+    $content .= "<a href='page/$catName/$prodName' class='tov'>
+    <img src='upload/{$row['img']}' class='tov__img'>
+    <span class='tov__head'>{$row['prodName']}</span>
+    <span class='tov__price'>Price: {$row['price']} $</span>
+    <span class='tov__date'>Date create: {$row['date_create']}</span>
+    <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span>   
+    </a>";
 }
 
 $content .= '</section>';
