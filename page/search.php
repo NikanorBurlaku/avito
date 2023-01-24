@@ -1,25 +1,30 @@
+
 <?php
 
-$catSlug = $params['catSlug'];
+$search = $_REQUEST['search']; //условие поиска
 
 $link = require './database/connect.php';
 $query1 = "SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
 LEFT JOIN 
 category ON category.id=product.id_categ
-WHERE category.name='$catSlug'";
+WHERE product.name LIKE '%$search%' OR product.descr LIKE '%$search%'"; //выбираем если продукт или описание содержат условия поиска
 
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
-$content = ' <section class="tov_section">';
+$content = ' <section class="tov_section">'; //заполняем поля для товара
+
 
 for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
 
-    $query2 = "SELECT * FROM user WHERE id='{$row['id_user']}'";
+    $query2 = "SELECT * FROM user WHERE id='{$row['id_user']}'"; //получаем данные продавца, который разместил объявление
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
+    
+    $catName = str_replace('_', ' ', $row['catName']); 
+    $prodName = str_replace(' ', '_', $row['prodName']);
 
-     $catName = str_replace('_', ' ', $row['catName']); 
-    $prodName = strtolower(str_replace(' ', '_', $row['prodName']));
-
+    // var_dump($row);
+    // echo "<br><br><br>";
+    
     $content .= "<a href='{{ url }}page/$catName/{$row['prodId']}' class='tov'>
     <img src='{{ url }}upload/{$row['img']}' class='tov__img'>
     <span class='tov__head'>{$row['prodName']}</span>
@@ -31,15 +36,16 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
 
 $content .= '</section>';
 
+
 $query3 = "SELECT * FROM category ORDER BY name";
 $result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
 
 $categories = '';
 
-for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
+for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) { //выбираем категории
     $row['name'] = strtolower($row['name']);
-    $categoryHref = str_replace('_', ' ', $row['name']);
-    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
+    $categoryHref = str_replace('_', ' ', $row['name']); 
+    $categories .= "<li><a href='../page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 $page = [
     'title' => 'bulletin board',
@@ -52,4 +58,5 @@ return $page;
 
 ?>
 
-?>
+
+

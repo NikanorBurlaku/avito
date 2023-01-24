@@ -6,6 +6,9 @@ $prodSlug = $params['prodSlug'];
 
 $link = require './database/connect.php';
 
+    $query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link)); 
+
 $query1 = "SELECT * FROM product
 WHERE product.id='$prodSlug'";
 
@@ -45,6 +48,8 @@ $product = mysqli_fetch_assoc($result);
     </div>
 </section>";
 
+
+
 $query3 = "SELECT * FROM category ORDER BY name";
 $result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
 
@@ -56,7 +61,7 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 $page = [
-    'title' => 'bulletin board',
+    'title' => $product['name'],
     'content' => $content,
     'categories' => $categories,
     'url' => '../../'

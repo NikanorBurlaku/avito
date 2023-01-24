@@ -134,7 +134,14 @@ body{
 .tov__sity {
     margin-top: 5px;
 }
-
+.tov__view{
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+.views__img{
+    width: 15px;
+}
 
 .login__popup,
 .register__popup {
