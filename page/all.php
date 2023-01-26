@@ -29,7 +29,8 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
     <span class='tov__price'>Price: {$product['price']} $</span>
     <span class='tov__date'>Date create: {$product['date_create']}</span>
     <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span> 
-    <span class='tov__view'><img src='images/view.png' class='views__img'> {$product['view']}</span>   
+    <span class='tov__view'><img src='images/view.png' class='views__img'> {$product['view']} 
+    <img src='images/star.png' class='views__img'> 0</span>   
     </a>";
 }
 

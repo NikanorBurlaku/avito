@@ -138,13 +138,13 @@ body{
     width: 100%;
     display: flex;
     gap: 5px;
+    line-height: 1;
 }
 .views__img{
     width: 15px;
 }
 
-.login__popup,
-.register__popup {
+.main__table {
     display: flex;
     justify-content: center;
     margin-top: 40px;
@@ -171,6 +171,25 @@ body{
     align-items: center;
     width: 70%;
     gap: 20px;
+}
+.table__cell{
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.table__link{
+    text-decoration: underline;
+}
+.table__link:hover{
+    color: #f00;
+}
+.block__cell{
+    background: rgba(255, 0, 0, 0.5);
+}
+.admin__cell{
+    background: rgba(0, 255, 0, 0.5);
+}
+.user__cell{
+    background: rgba(0, 0, 255, 0.5);
 }
 .form__input,
 .form__submit,

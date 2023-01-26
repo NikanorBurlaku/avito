@@ -1,6 +1,6 @@
 <?php include "page/header.php"; ?>
 
-<div class="login__popup">
+<div class="main__table">
     <div class="login__block">
         <h2 class="login__title">Sign in</h2>
         <form action="" class="form" method="post">
@@ -28,13 +28,14 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) { // пров�
 
     var_dump($_REQUEST);
     $link = require "database/connect.php";
-    $query = "SELECT login, password FROM user WHERE login='$login'";
+    $query = "SELECT login, password, status FROM user WHERE login='$login'";
     $result = mysqli_query($link, $query) or die($link);
     $user = mysqli_fetch_assoc($result);
 
 
     if (!empty($user)) {
         $_SESSION['login'] = $user['login'];
+        $_SESSION['status'] = $user['status'];
         $_SESSION['auth'] = 'true';
         header('Location: index.php');
     } else {

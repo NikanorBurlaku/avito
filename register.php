@@ -1,6 +1,6 @@
 <?php include "page/header.php"; ?>
 
-    <div class="register__popup">
+    <div class="main__table">
         <div class="login__block">
             <h2 class="login__title">Sign up</h2>
             <form action="" class="form" method="post">
