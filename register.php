@@ -11,7 +11,7 @@
                 <input type="text" class="form__input" name="surname" placeholder="surname">
                 <input type="email" class="form__input" name="email" placeholder="email" require>
 
-                <input type="submit" class="form__submit" value="sign in">
+                <input type="submit" class="form__submit" value="sign up">
             </form>
             <a href="login.php" class="form__href">sign in</a>
         </div>
@@ -57,19 +57,21 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_RE
             phone='$phone',
             verify='$verify',
             status='$status',
+            block='false',
             img='$img',
             date_reg='$date_reg'";
             mysqli_query($link, $query2) or die(mysqli_error($link));
 
             $_SESSION['auth'] = 'true';
+            $_SESSION['status'] = 'user';
             $_SESSION['login'] = $login;
             header('Location: index.php');
         } else {
-            echo "Пароли не совпадают, попробуйте снова";
+            echo "Passwords do not match, please try again";
         }
 
     } else {
-        echo "Этот логин занят";
+        echo "This login is busy";
     }
 }
 

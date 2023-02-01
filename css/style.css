@@ -401,4 +401,40 @@ font-size: 1vw;}
   .error_text a:hover{
     text-decoration: underline;
   }
+  .error{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .error__block{
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    border-radius: 8px;
+    background-color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .error__text{
+    font-size: 2em;
+    margin: 20px auto;
+  }
+  .error__button{
+    background-color: #FF4141;
+    color: rgb(255, 255, 255);
+    padding: 5px 20px;
+    font-size: 2em;
+    box-shadow: 2px 3px 5px rgb(115 115 115);
+    border-radius: 8px;
+    border: 3px solid rgb(255, 255, 255);
+    margin: 10px 0px;
+    text-transform: uppercase;
+  }
   

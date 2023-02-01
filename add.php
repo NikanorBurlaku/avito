@@ -1,7 +1,7 @@
 <?php include "page/header.php"; 
 if (!empty($_SESSION['auth'])) :
 ?>
-    <div class="register__popup">
+    <div class="main__table">
         <div class="login__block">
             <h2 class="login__title">add a new ad</h2>
             <form action="" class="form" method="post" enctype="multipart/form-data">

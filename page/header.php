@@ -14,12 +14,23 @@
     <header class="header">
         <div class="container">
             <ul class="header__nav">
-                <li><a href="index.php" class="header__link">help</a></li>
+                <li><a href="index.php" class="header__link">main</a></li>
                 <li><a href="index.php" class="header__link favorite"><img src="images/favorite.svg" class="header__img">favorites</a></li>
                 <li><a href="add.php" class="header__link add"><img src="images/add.svg" class="header__img">place an ad</a></li>
-                <li><a href="login.php" class="header__link">sign in</a> </li>
-                <li><a href="register.php" class="header__link">sign up</a></li>
-                <li><a href="index.php" class="header__link">your sity: <span class="header__city">Chishinau</span></a></li>
+                <?php
+                if ($_SESSION['status'] === 'admin') :?>
+                    <li><a href="{{ url }}admin.php" class="header__link">admin panel</a> </li>
+                <?php
+                endif;
+                if ($_SESSION['auth'] === 'true') :
+                ?>
+                    <li><a href="logout.php" id="logout" class="header__link">log out</a></li>
+                <?php else : ?>
+
+                    <li><a href="login.php" class="header__link">sign in</a> </li>
+                    <li><a href="register.php" class="header__link">sign up</a></li>
+                <?php endif; ?>
+
             </ul>
         </div>
     </header>

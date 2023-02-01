@@ -30,7 +30,7 @@ if($_SESSION['status'] === 'admin'){
         </thead><tbody>";
     for($data = []; $user = mysqli_fetch_assoc($result); $data[] = $user){
 
-        if($user['blocking'] === 'true'){
+        if($user['block'] === 'true'){
             echo "<tr class='block__cell'>";
         }elseif($user['status'] === 'admin'){
             echo "<tr class='admin__cell'>";
@@ -45,9 +45,9 @@ if($_SESSION['status'] === 'admin'){
         <td class='table__cell'>{$user['verify']}</td>
         <td class='table__cell'>{$user['status']}</td>
         <td class='table__cell'>{$user['date_reg']}</td>
-        <td class='table__cell'><a class='table__link' href='?changeStatus={$user['login']}'>change</a></td>
-        <td class='table__cell'><a class='table__link' href='?blockUser={$user['login']}'>block</a></td>
-        <td class='table__cell'><a class='table__link' href='?deleteUser={$user['login']}'>delete</a></td>
+        <td class='table__cell'><a class='table__link' href='admin/changeStatus.php?login={$user['login']}'>change</a></td>
+        <td class='table__cell'><a class='table__link' href='admin/blockUser.php?login={$user['login']}'>block</a></td>
+        <td class='table__cell'><a class='table__link' href='admin/deleteUser.php?login={$user['login']}'>delete</a></td>
         </tr>";
     }
 
