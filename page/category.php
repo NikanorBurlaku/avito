@@ -17,16 +17,26 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
 
-     $catName = str_replace('_', ' ', $row['catName']); 
+    $catName = str_replace('_', ' ', $row['catName']);
     $prodName = strtolower(str_replace(' ', '_', $row['prodName']));
 
-    $content .= "<a href='{{ url }}page/$catName/{$row['prodId']}' class='tov'>
+    if (!empty($user)) {
+        if ($user['verify'] === 'true') {
+            $verify = '<img class="verify__img" src="images/verify.png">';
+        } else {
+            $verify = '';
+        }
+        if ($user['block'] === 'false') {
+
+            $content .= "<a href='{{ url }}page/$catName/{$row['prodId']}' class='tov'>
     <img src='{{ url }}upload/{$row['img']}' class='tov__img'>
     <span class='tov__head'>{$row['prodName']}</span>
     <span class='tov__price'>Price: {$row['price']} $</span>
     <span class='tov__date'>Date create: {$row['date_create']}</span>
     <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span>   
     </a>";
+        }
+    }
 }
 
 $content .= '</section>';

@@ -33,10 +33,13 @@ if($_SESSION['status'] === 'admin'){
 
         if($user['block'] === 'true'){
             echo "<tr class='block__cell'>";
+            $block_text = 'unblock';
         }elseif($user['status'] === 'admin'){
             echo "<tr class='admin__cell'>";
+            $block_text = 'block';
         } else {
             echo "<tr class='user__cell'>";
+            $block_text = 'block';
         }
         echo "
         <td class='table__cell'>{$user['login']}</td>
@@ -48,7 +51,7 @@ if($_SESSION['status'] === 'admin'){
         <td class='table__cell'>{$user['status']}</td>
         <td class='table__cell'>{$user['date_reg']}</td>
         <td class='table__cell'><a class='table__link' href='admin/changeStatus.php?login={$user['login']}'>change</a></td>
-        <td class='table__cell'><a class='table__link' href='admin/blockUser.php?login={$user['login']}'>block</a></td>
+        <td class='table__cell'><a class='table__link' href='admin/blockUser.php?login={$user['login']}'>$block_text</a></td>
         <td class='table__cell'><a class='table__link' href='admin/deleteUser.php?login={$user['login']}'>delete</a></td>
         </tr>";
     }

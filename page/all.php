@@ -16,22 +16,32 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
     $selectUser = "SELECT * FROM user WHERE id='{$product['id_user']}'";
     $result2 = mysqli_query($link, $selectUser) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
-    
-    $catName = str_replace('_', ' ', $product['catName']); 
+
+    $catName = str_replace('_', ' ', $product['catName']);
     $prodName = str_replace(' ', '_', $product['prodName']);
 
     // var_dump($product['prodId']);
     // echo "<br><br><br>";
 
-    $content .= "<a href='page/$catName/{$product['prodId']}' class='tov'>
-    <img src='upload/{$product['img']}' class='tov__img'>
-    <span class='tov__head'>{$product['prodName']}</span>
-    <span class='tov__price'>Price: {$product['price']} $</span>
-    <span class='tov__date'>Date create: {$product['date_create']}</span>
-    <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span> 
-    <span class='tov__view'><img src='images/view.png' class='views__img'> {$product['view']} 
-    <img src='images/star.png' class='views__img'> 0</span>   
-    </a>";
+
+    if (!empty($user)) {
+        if ($user['verify'] === 'true') {
+            $verify = '<img class="verify__img" src="images/verify.png">';
+        } else {
+            $verify = '';
+        }
+        if ($user['block'] === 'false') {
+            $content .= "<a href='page/$catName/{$product['prodId']}' class='tov'>
+        <img src='upload/{$product['img']}' class='tov__img'>
+        <span class='tov__head'>{$product['prodName']}</span>
+        <span class='tov__price'>Price: {$product['price']} $</span>
+        <span class='tov__date'>Date create: {$product['date_create']}</span>
+        <span class='tov__user'>Salesman: {$user['name']} {$user['surname']} $verify</span> 
+        <span class='tov__view'><img src='images/view.png' class='views__img'> {$product['view']} 
+        <img src='images/star.png' class='views__img'> 0</span>   
+        </a>";
+        }
+    }
 }
 
 $content .= '</section>';
@@ -43,7 +53,7 @@ $categories = '';
 
 for ($data = []; $category = mysqli_fetch_assoc($selectCategories); $data[] = $category) { //выбираем категории
     $category['name'] = strtolower($category['name']);
-    $categoryHref = str_replace('_', ' ', $category['name']); 
+    $categoryHref = str_replace('_', ' ', $category['name']);
     $categories .= "<li><a href='page/{$category['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 $page = [

@@ -19,6 +19,8 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
     
+    var_dump($user);
+    echo "<br><br>";
     $catName = str_replace('_', ' ', $row['catName']); 
     $prodName = str_replace(' ', '_', $row['prodName']);
 

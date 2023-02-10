@@ -110,6 +110,7 @@ body{
     flex-wrap: wrap;
     gap: 1%;
     margin-top: 20px;
+    padding-bottom: 20px;
 }
 .tov {
     width: 32%;
@@ -440,5 +441,8 @@ font-size: 1vw;}
     border: 3px solid rgb(255, 255, 255);
     margin: 10px 0px;
     text-transform: uppercase;
+  }
+  .verify__img{
+    width: 15px;
   }
   

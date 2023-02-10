@@ -34,7 +34,7 @@
             </acide>
             <article class="article">
                 <form action="{{ url }}page/search.php" class="article__form" method="get">
-                    <input type="search" class="article__input__search" name="search" placeholder="search" required>
+                    <input type="search" class="article__input__search" value="{{ search_input }}" name="search" placeholder="search" required>
                     <input type="submit" value="find" class="article__submit">
                 </form>
 
