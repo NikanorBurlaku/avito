@@ -34,9 +34,8 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
             $content .= "<a href='page/$catName/{$product['prodId']}' class='tov'>
         <img src='upload/{$product['img']}' class='tov__img'>
         <span class='tov__head'>{$product['prodName']}</span>
-        <span class='tov__price'>Price: {$product['price']} $</span>
-        <span class='tov__date'>Date create: {$product['date_create']}</span>
-        <span class='tov__user'>Salesman: {$user['name']} {$user['surname']} $verify</span> 
+        <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
+        <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 
         <span class='tov__view'><img src='images/view.png' class='views__img'> {$product['view']} 
         <img src='images/star.png' class='views__img'> 0</span>   
         </a>";

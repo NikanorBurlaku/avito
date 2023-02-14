@@ -21,10 +21,12 @@ $product = mysqli_fetch_assoc($result);
 
     $content = "<section class='product__section'>
     <div class='product__block'>
+
+    <div class='product__title'>
+    <h2 class='product__name'>{$product['name']}</h2>
+</div>
+    <div class='product__block--head__img'>
         <img src='{{ url }}upload/{$product['img']}' class='product__img'>
-        <div class='product__title'>
-            <h2 class='product__name'>{$product['name']}</h2>
-            <span class='product__date'>{$product['date_create']}</span>
         </div>
         <div class='product__decription'>
             <span class='product__span'>decription</span>
@@ -34,17 +36,30 @@ $product = mysqli_fetch_assoc($result);
             <span class='product__span'>location</span>
             <span class='product__text'>{$product['adress']}</span>
         </div>
+
+        <div class='product__date'>
+        <span class='product__span'>update date</span>
+        <span class='product__text'>{$product['date_create']}</span>
+       </div>
     </div>
     <div class='contact__block'>
-        <h2 class='product__price'>{$product['price']} $</h2>
-        <button class='show__number'>show phone</button>
         <button class='send__message'>send meassage</button>
         <a href='index.php' class='salesmam__block'>
-            <img src='images/salesman.png' class='salesman__img'>
+            <img src='{{ url }}upload/{$user['img']}' class='salesman__img--ava'>
             <h3 class='salesman__name'>{$user['name']} {$user['surname']}</h3>
-            <span class='salesman__date'>here with {$user['date_reg']}</span>
-            <span class='salesman__review'>reviews: 0</span>
         </a>
+            <p class='salesmam__block'>
+            <img src='{{ url }}images/calendar.png' class='salesman__img'> here with {$user['date_reg']}
+            </p>
+            <a href='index.php' class='salesmam__block'>
+            <img src='{{ url }}images/review.png' class='salesman__img'> reviews: 0
+            </a>
+            <p class='salesmam__block salesman__price'>
+            {$product['price']} $
+            </p>
+            <a href='index.php' class='salesmam__block'>
+            <img src='{{ url }}images/favorite.svg' class='salesman__img'> add to favorites
+            </a>
     </div>
 </section>";
 
@@ -68,7 +83,3 @@ $page = [
 ];
 
 return $page;
-
-?>  
-                
-           
