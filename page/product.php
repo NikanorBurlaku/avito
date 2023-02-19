@@ -3,7 +3,7 @@
 $catSlug = $params['catSlug'];
 $prodSlug = $params['prodSlug'];
 
-
+$login = $_SESSION['login'];
 $link = require './database/connect.php';
 
     $query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
@@ -57,8 +57,9 @@ $product = mysqli_fetch_assoc($result);
             <p class='salesmam__block salesman__price'>
             {$product['price']} $
             </p>
-            <a href='index.php' class='salesmam__block'>
-            <img src='{{ url }}images/favorite.svg' class='salesman__img'> add to favorites
+            <a  id='favorite_click' class='salesmam__block'>
+            <img src='{{ url }}images/favorite_open.png' id='favorite_img' class='salesman__img'> 
+            <span id='favorite_text'>add to favorites</span>
             </a>
     </div>
 </section>";
@@ -75,10 +76,16 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
+
+$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
+$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
+$favorite = mysqli_fetch_assoc($result);
+
 $page = [
     'title' => $product['name'],
     'content' => $content,
     'categories' => $categories,
+    'favorite' => $favorite["COUNT(*)"],
     'url' => '../../'
 ];
 

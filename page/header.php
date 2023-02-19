@@ -15,7 +15,7 @@
         <div class="container">
             <ul class="header__nav">
                 <li><a href="index.php" class="header__link">main</a></li>
-                <li><a href="index.php" class="header__link favorite"><img src="images/favorite.svg" class="header__img">favorites</a></li>
+                <li><a href="favorite.php" class="header__link favorite"><img src="images/favorite.svg" class="header__img">favorites</a></li>
                 <li><a href="add.php" class="header__link add"><img src="images/add.svg" class="header__img">place an ad</a></li>
                 <?php
                 if ($_SESSION['status'] === 'admin') :?>

@@ -41,6 +41,9 @@ switch ($url) {
     case str_contains($url, 'admin/changeStatus'):
         require_once 'admin/changeStatus.php';
         break;
+    case str_contains($url, 'page/addFavorite'):
+        require_once 'page/addFavorite.php';
+        break;
     case str_contains($url, 'admin/blockUser'):
         require_once 'admin/blockUser.php';
         break;
@@ -56,6 +59,10 @@ switch ($url) {
         $route = '/index.php'; //для всех товаров
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'page/all.php';
+        }
+        $route = '/favorite.php'; //для всех товаров
+        if (preg_match("#$route#", $url, $params)) {
+            $page = include 'favorite.php';
         }
         $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)'; // для категории
         if (preg_match("#$route#", $url, $params)) {
@@ -103,12 +110,13 @@ switch ($url) {
         } else {
             $layout = str_replace('{{ search_input }}', '', $layout); //если в параметре "search" пусто
         }
-        
+        $layout = str_replace('{{ favorite }}', $page['favorite'], $layout); // отображение количества избранных сообщений
         $layout = str_replace('{{ url }}', $page['url'], $layout); // настраиваем пути
         $layout = str_replace('{{ auth }}', $auth, $layout); //подставляем ссылки для авторизации/логаута
         $layout = str_replace('{{ admin }}', $admin, $layout); //подставляем ссылки для авторизации/логаута
 
         echo $layout; //выводим все на экран
         break;
+        
 }
 ?>
