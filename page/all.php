@@ -1,7 +1,7 @@
 
 <?php
 
-
+$login = $_SESSION['login'];
 $link = require './database/connect.php';
 $selectProduct = "SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
 LEFT JOIN 

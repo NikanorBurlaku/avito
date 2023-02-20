@@ -1,5 +1,6 @@
 <?php
 
+$login = $_SESSION['login'];
 $catSlug = $params['catSlug'];
 
 $link = require './database/connect.php';
