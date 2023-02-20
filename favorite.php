@@ -61,11 +61,21 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
+
+$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
+$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
+$favorite = mysqli_fetch_assoc($result);
+if($favorite["COUNT(*)"] === '0'){
+    $favorite = '';
+} else {
+    $favorite = $favorite["COUNT(*)"];
+}
+
 $page = [
     'title' => 'favorite add',
     'content' => $content,
     'categories' => $categories,
-    'favorite' => $favorite["COUNT(*)"],
+    'favorite' => $favorite,
     'url' => ''
 ];
 

@@ -56,12 +56,32 @@ $product = mysqli_fetch_assoc($result);
             </a>
             <p class='salesmam__block salesman__price'>
             {$product['price']} $
-            </p>
-            <a  id='favorite_click' class='salesmam__block'>
-            <img src='{{ url }}images/favorite_open.png' id='favorite_img' class='salesman__img'> 
-            <span id='favorite_text'>add to favorites</span>
-            </a>
-    </div>
+            </p>";
+
+            $isInFavorite = "SELECT * FROM favorite WHERE login='$login' AND id_product='{$product['id']}'";
+            $resultFavorite = mysqli_query($link, $isInFavorite);
+            $isInFavorite = mysqli_fetch_assoc($resultFavorite);
+           
+            if(!empty($isInFavorite)){
+                $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
+                <input type='hidden' name='id' value={$product['id']}>
+                <button type='submit' class='favorite__button'>
+                <img src='{{ url }}images/favorite_close.png' id='favorite_img' class='salesman__img'> 
+                <span id='favorite_text'>remove from favorites</span>
+                </button>
+                </form>";
+            } else {
+                $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
+                <input type='hidden' name='id' value={$product['id']}>
+                <button type='submit' class='favorite__button'>
+                <img src='{{ url }}images/favorite_open.png' id='favorite_img' class='salesman__img'> 
+                <span id='favorite_text'>add to favorites</span>
+                </button>
+                </form>";
+            }
+
+            
+    $content .= "</div>
 </section>";
 
 
@@ -80,12 +100,17 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
 $selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
 $result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
 $favorite = mysqli_fetch_assoc($result);
+if($favorite["COUNT(*)"] === '0'){
+    $favorite = '';
+} else {
+    $favorite = $favorite["COUNT(*)"];
+}
 
 $page = [
     'title' => $product['name'],
     'content' => $content,
     'categories' => $categories,
-    'favorite' => $favorite["COUNT(*)"],
+    'favorite' => $favorite,
     'url' => '../../'
 ];
 

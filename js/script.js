@@ -35,3 +35,21 @@ if (favorClick) {
        
     })
 }
+       let favoriteForm = document.querySelector("#favorite_click");
+       if(favoriteForm){
+        document.querySelector('.favorite__button').addEventListener('click', () => {
+            var request = new XMLHttpRequest();
+            request.onload = function () {
+              if (request.status == 200) {
+                console.log("OK")
+              }
+            };
+            request.open(favoriteForm.method, favoriteForm.action, true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var id = favoriteForm.querySelector('[name="id"]');
+            request.send('id=' + encodeURIComponent(id.value));
+            return false;
+          })
+        }
+      
+       

@@ -41,8 +41,8 @@ switch ($url) {
     case str_contains($url, 'admin/changeStatus'):
         require_once 'admin/changeStatus.php';
         break;
-    case str_contains($url, 'page/addFavorite'):
-        require_once 'page/addFavorite.php';
+    case str_contains($url, 'favorite/changeFavorite'):
+        require_once 'favorite/changeFavorite.php';
         break;
     case str_contains($url, 'admin/blockUser'):
         require_once 'admin/blockUser.php';
@@ -64,6 +64,7 @@ switch ($url) {
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'favorite.php';
         }
+        
         $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)'; // для категории
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'page/category.php';

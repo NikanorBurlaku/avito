@@ -55,10 +55,21 @@ for ($data = []; $category = mysqli_fetch_assoc($selectCategories); $data[] = $c
     $categoryHref = str_replace('_', ' ', $category['name']);
     $categories .= "<li><a href='page/{$category['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
+
+$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
+$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
+$favorite = mysqli_fetch_assoc($result);
+if($favorite["COUNT(*)"] === '0'){
+    $favorite = '';
+} else {
+    $favorite = $favorite["COUNT(*)"];
+}
+
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
     'categories' => $categories,
+    'favorite' => $favorite,
     'url' => ''
 ];
 
