@@ -28,7 +28,7 @@ if (!empty($_SESSION['auth'])) :
                 <div class="input__wrapper">
                     <input name="file" type="file" id="input__file" class="input input__file" multiple="">
                     <label for="input__file" class="input__file-button">
-                        <span class="input__file-icon-wrapper"><img class="input__file-icon" src="images/upload.svg" alt="select file" width="25"></span>
+                        <span class="input__file-icon-wrapper"><img class="input__file-icon" src="../images/upload.svg" alt="select file" width="25"></span>
                         <span class="input__file-button-text">select file</span>
                     </label>
                 </div>
@@ -113,7 +113,7 @@ if ($_FILES && $_FILES['file']['error'] == UPLOAD_ERR_OK) { //загружаем
     move_uploaded_file($_FILES['file']['tmp_name'], $name);
 }
 
-    header("Location: index.php");
+    header("Location: ../index.php");
 }
 
 

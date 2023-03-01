@@ -14,7 +14,7 @@
             $blockUser = "UPDATE user SET block='false' WHERE login='$login'";
         }
         mysqli_query($link, $blockUser);
-        header("Location: ../admin.php");
+        header("Location: ../account/admin.php");
     }
 
 ?>

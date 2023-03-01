@@ -6,7 +6,7 @@
 
         $deletetUser = "DELETE FROM user WHERE login='$login'";
         $result = mysqli_query($link, $deletetUser);
-        header("Location: ../admin.php");
+        header("Location: ../account/admin.php");
     }
 
 ?>

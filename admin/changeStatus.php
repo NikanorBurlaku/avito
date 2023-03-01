@@ -14,7 +14,7 @@
             $changeStatus = "UPDATE user SET status='user' WHERE login='$login'";
         }
         mysqli_query($link, $changeStatus);
-        header("Location: ../admin.php");
+        header("Location: ../account/admin.php");
     }
 
 ?>

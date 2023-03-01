@@ -46,7 +46,7 @@ if($_SESSION['status'] === 'admin'){
         <td class='table__cell'>{$user['name']}</td>
         <td class='table__cell'>{$user['surname']}</td>
         <td class='table__cell'>{$user['email']}</td>
-        <td class='table__cell'><img class='table__img' src=upload/{$user['img']}></td>
+        <td class='table__cell'><img class='table__img' src=../upload/{$user['img']}></td>
         <td class='table__cell'>{$user['verify']}</td>
         <td class='table__cell'>{$user['status']}</td>
         <td class='table__cell'>{$user['date_reg']}</td>

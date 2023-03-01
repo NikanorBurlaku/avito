@@ -8,32 +8,32 @@ $url = str_replace('/avito', '', $url);
 echo ($url);
 
 switch ($url) {
-    case '/login.php':
-        require_once 'login.php';
+    case '/account/login.php':
+        require_once 'account/login.php';
         break;
-    case '/login.php':
-        require_once 'login.php';
+    case '/account/login.php':
+        require_once 'account/login.php';
         break;
-    case '/register.php':
-        require_once 'register.php';
+    case '/account/register.php':
+        require_once 'account/register.php';
         break;
-    case '/admin.php':
-        require_once 'admin.php';
+    case '/account/admin.php':
+        require_once 'account/admin.php';
         break;
-    case '/account.php':
-        require_once 'account.php';
+    case '/account/account.php':
+        require_once 'account/account.php';
         break;
-    case '/logout.php':
-        require_once 'logout.php';
+    case '/account/logout.php':
+        require_once 'account/logout.php';
         break;
-    case '/add.php':
-        require_once 'add.php';
+    case '/page/add.php':
+        require_once 'page/add.php';
         break;
-    case '/add.php':
-        require_once 'add.php';
+    case '/account/admin.php':
+        require_once 'account/admin.php';
         break;
-    case '/verify.php':
-        require_once 'verify.php';
+    case '/account/verify.php':
+        require_once 'account/verify.php';
         break;
     case '/account/send_email.php':
         require_once 'account/send_email.php';
@@ -60,9 +60,9 @@ switch ($url) {
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'page/all.php';
         }
-        $route = '/favorite.php'; //для всех товаров
+        $route = '/account/favorite.php'; //для всех товаров
         if (preg_match("#$route#", $url, $params)) {
-            $page = include 'favorite.php';
+            $page = include 'account/favorite.php';
         }
         
         $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)'; // для категории
@@ -86,19 +86,19 @@ switch ($url) {
 
 
         if ($_SESSION['status'] === 'admin') {
-            $admin = '<li><a href="{{ url }}admin.php" class="header__link">admin panel</a> </li>';
+            $admin = '<li><a href="{{ url }}account/admin.php" class="header__link">admin panel</a> </li>';
             $admin = str_replace('{{ url }}', $page['url'], $admin); //настраиваем путь
         } else {
             $admin = '';
         }
 
         if (!empty($_SESSION['auth'])) { //проверка на авторизацию
-            $auth = '<li><a href="{{ url }}account.php" id="account" class="header__link">account</a></li>
-            <li><a href="{{ url }}logout.php" id="logout" class="header__link">log out</a></li>';
+            $auth = '<li><a href="{{ url }}account/account.php" id="account" class="header__link">account</a></li>
+            <li><a href="{{ url }}account/logout.php" id="logout" class="header__link">log out</a></li>';
             $auth = str_replace('{{ url }}', $page['url'], $auth); //настраиваем путь
         } else {
-            $auth = '<li><a href="{{ url }}login.php" class="header__link">sign in</a> </li>
-        <li><a href="{{ url }}register.php" class="header__link">sign up</a></li>';
+            $auth = '<li><a href="{{ url }}account/login.php" class="header__link">sign in</a> </li>
+        <li><a href="{{ url }}account/register.php" class="header__link">sign up</a></li>';
             $auth = str_replace('{{ url }}', $page['url'], $auth); //настраиваем путь
         }
 

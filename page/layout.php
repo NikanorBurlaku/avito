@@ -15,8 +15,8 @@
         <div class="container">
             <ul class="header__nav">
                 <li><a href="{{ url }}index.php" class="header__link">main</a></li>
-                <li><a href="{{ url }}favorite.php" class="header__link favorite"><img src="{{ url }}images/favorite.svg" class="header__img">favorites <span class="count__add">{{ favorite }}</span></a></li>
-                <li><a href="{{ url }}add.php" class="header__link add"><img src="{{ url }}images/add.svg" class="header__img">place an ad</a></li>
+                <li><a href="{{ url }}account/favorite.php" class="header__link favorite"><img src="{{ url }}images/favorite.svg" class="header__img">favorites <span class="count__add">{{ favorite }}</span></a></li>
+                <li><a href="{{ url }}page/add.php" class="header__link add"><img src="{{ url }}images/add.svg" class="header__img">place an ad</a></li>
                 {{ admin }}
                 {{ auth }}
             </ul>

@@ -13,7 +13,7 @@
                 <div class="input__wrapper">
                     <input name="file" type="file" id="input__file" class="input input__file" multiple="">
                     <label for="input__file" class="input__file-button">
-                        <span class="input__file-icon-wrapper"><img class="input__file-icon" src="images/upload.svg" alt="select file" width="25"></span>
+                        <span class="input__file-icon-wrapper"><img class="input__file-icon" src="../images/upload.svg" alt="select file" width="25"></span>
                         <span class="input__file-button-text">select file</span>
                     </label>
                 </div>
@@ -98,7 +98,7 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_RE
             $_SESSION['status'] = 'user';
             $_SESSION['login'] = $login;
 
-            header('Location: index.php');
+            header('Location: ../index.php');
         } else {
             echo "<div class='error'><div class='error__block'><p class='error__text'>Passwords do not match, please try again</p><button class='error__button'>OK</button></div></div>";
         }

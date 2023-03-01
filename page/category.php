@@ -12,30 +12,31 @@ WHERE category.name='$catSlug'";
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
 $content = ' <section class="tov_section">';
 
-for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
+for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
 
-    $query2 = "SELECT * FROM user WHERE id='{$row['id_user']}'";
+    $query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
 
-    $catName = str_replace('_', ' ', $row['catName']);
-    $prodName = strtolower(str_replace(' ', '_', $row['prodName']));
+    $catName = str_replace('_', ' ', $product['catName']);
+    $prodName = strtolower(str_replace(' ', '_', $product['prodName']));
 
     if (!empty($user)) {
         if ($user['verify'] === 'true') {
-            $verify = '<img class="verify__img" src="images/verify.png">';
+            $verify = '<img class="verify__img" src="{{ url }}images/verify.png">';
         } else {
             $verify = '';
         }
         if ($user['block'] === 'false') {
 
-            $content .= "<a href='{{ url }}page/$catName/{$row['prodId']}' class='tov'>
-    <img src='{{ url }}upload/{$row['img']}' class='tov__img'>
-    <span class='tov__head'>{$row['prodName']}</span>
-    <span class='tov__price'>Price: {$row['price']} $</span>
-    <span class='tov__date'>Date create: {$row['date_create']}</span>
-    <span class='tov__user'>Salesman: {$user['name']} {$user['surname']}</span>   
-    </a>";
+            $content .= "<a href='{{ url }}page/$catName/{$product['prodId']}' class='tov'>
+            <img src='{{ url }}upload/{$product['img']}' class='tov__img'>
+            <span class='tov__head'>{$product['prodName']}</span>
+            <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
+            <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 
+            <span class='tov__view'><img src='{{ url }}images/view.png' class='views__img'> {$product['view']} 
+            <img src='{{ url }}images/star.png' class='views__img'> 0</span>   
+            </a>";
         }
     }
 }
@@ -54,9 +55,9 @@ for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
 }
 
 $selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
+$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link));
 $favorite = mysqli_fetch_assoc($result);
-if($favorite["COUNT(*)"] === '0'){
+if ($favorite["COUNT(*)"] === '0') {
     $favorite = '';
 } else {
     $favorite = $favorite["COUNT(*)"];

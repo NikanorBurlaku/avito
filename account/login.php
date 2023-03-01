@@ -40,7 +40,7 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) { // пров�
                 $_SESSION['login'] = $user['login'];
                 $_SESSION['status'] = $user['status'];
                 $_SESSION['auth'] = 'true';
-                 header('Location: index.php');
+                 header('Location: ../index.php');
             }
            
           } else {
