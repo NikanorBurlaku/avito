@@ -3,7 +3,6 @@
 if ($_SESSION['auth'] === 'true' and !empty($_SESSION['login'])) :
 
 
-    $link = require_once('database/connect.php');
     $login = $_SESSION['login'];
 
     if (!empty($_REQUEST)) {
@@ -26,6 +25,7 @@ if ($_SESSION['auth'] === 'true' and !empty($_SESSION['login'])) :
                 $nameImg = 'default.png';
             }
         }
+        var_dump($_FILES);
         $updateUser = "UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'";
         mysqli_query($link, $updateUser);
     }
@@ -73,7 +73,6 @@ endif;
             let countFiles = '';
             if (this.files && this.files.length >= 1)
                 countFiles = this.files.length;
-                input.disabled = true;
                 document.querySelector('.input__file-button').style.opacity = "0.7";
             if (countFiles)
                 label.querySelector('.input__file-button-text').innerText = 'file selected';
