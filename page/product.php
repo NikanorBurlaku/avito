@@ -44,7 +44,7 @@ $product = mysqli_fetch_assoc($result);
     </div>
     <div class='contact__block'>
         <button class='send__message'>send meassage</button>
-        <a href='index.php' class='salesmam__block'>
+        <a href='{{ url }}user/{$user['login']}' class='salesmam__block'>
             <img src='{{ url }}upload/{$user['img']}' class='salesman__img--ava'>
             <h3 class='salesman__name'>{$user['name']} {$user['surname']}</h3>
         </a>

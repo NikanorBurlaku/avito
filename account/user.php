@@ -1,7 +1,6 @@
 <?php
 
-$catSlug = $params['catSlug'];
-$prodSlug = $params['prodSlug'];
+$catSlug = $params['userSlug'];
 
 
 $link = require './database/connect.php';

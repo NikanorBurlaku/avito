@@ -6,27 +6,29 @@ if ($_SESSION['auth'] === 'true' and !empty($_SESSION['login'])) :
     $link = require_once('database/connect.php');
     $login = $_SESSION['login'];
 
-if (!empty($_REQUEST)) {
-    var_dump($_FILES);
-    echo "<br>";
-    var_dump($_REQUEST);
-    $name = $_REQUEST['name'];
-    $surname = $_REQUEST['surname'];
-    $phone = $_REQUEST['phone'];
-    $email = $_REQUEST['email'];
-    if (!empty($_FILES) && $_REQUEST['nameImg'] != 'default.png') {
-        $nameImg = str_replace(' ', '_', ($_REQUEST['name'] . "." . substr(($_FILES["file"]["type"]), 6))); //если загрузил, то привязывем к имени товара, но это нужно будет исправить и заменить на цикл
-        if ($_FILES && $_FILES['file']['error'] == UPLOAD_ERR_OK) { //загружаем файл на сервер
-            $pathImg = "upload/" . $nameImg;
-            move_uploaded_file($_FILES['file']['tmp_name'], $pathImg);
+    if (!empty($_REQUEST)) {
+        $name = $_REQUEST['name'];
+        $surname = $_REQUEST['surname'];
+        $phone = $_REQUEST['phone'];
+        $email = $_REQUEST['email'];
+
+        if (empty($_FILES['file']['tmp_name'])) {
+            $nameImg = $_REQUEST['nameImg'];
+        } else {
+            if (!empty($_FILES) && $_REQUEST['nameImg'] != 'default.png') {
+                echo $_FILES["file"]["type"] . "<br>";
+                $nameImg = str_replace(' ', '_', ($_REQUEST['name'] . "." . substr(($_FILES["file"]["type"]), 6))); //если загрузил, то привязывем к имени товара, но это нужно будет исправить и заменить на цикл
+                if ($_FILES && $_FILES['file']['error'] == UPLOAD_ERR_OK) { //загружаем файл на сервер
+                    $pathImg = "upload/" . $nameImg;
+                    move_uploaded_file($_FILES['file']['tmp_name'], $pathImg);
+                }
+            } else {
+                $nameImg = 'default.png';
+            }
         }
-    } else {
-        $nameImg = 'default.png';
+        $updateUser = "UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'";
+        mysqli_query($link, $updateUser);
     }
-    echo $nameImg;
-    $updateUser = "UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'";
-    mysqli_query($link, $updateUser);
-}
 
     $selectUser = "SELECT * FROM user WHERE login='$login'";
     $result = mysqli_query($link, $selectUser);
@@ -40,8 +42,9 @@ if (!empty($_REQUEST)) {
                 <input type="text" class="form__input" name="surname" placeholder="surname" value="<?= $user['surname'] ?>">
                 <input type="phone" class="form__input" name="phone" placeholder="phone" require value="<?= $user['phone'] ?>">
                 <input type="email" class="form__input" name="email" placeholder="email" require value="<?= $user['email'] ?>">
+                <span style="font-weight: 800;">Your main photo:</span>
                 <img class="form__img" src="../upload/<?= $user['img'] ?>" alt="">
-                <input type="text" name="nameImg" value="<?= $user['img'] ?>">
+                <input type="hidden" name="nameImg" value="<?= $user['img'] ?>">
                 <div class="input__wrapper">
                     <input name="file" type="file" id="input__file" class="input input__file" multiple="">
                     <label for="input__file" class="input__file-button">
@@ -60,6 +63,24 @@ endif;
 ?>
 <script>
     const title = "account";
+
+    let inputs = document.querySelectorAll('.input__file');
+    Array.prototype.forEach.call(inputs, function(input) {
+        let label = input.nextElementSibling,
+            labelVal = label.querySelector('.input__file-button-text').innerText;
+
+        input.addEventListener('change', function(e) { //код для анимации при выборе картинки
+            let countFiles = '';
+            if (this.files && this.files.length >= 1)
+                countFiles = this.files.length;
+                input.disabled = true;
+                document.querySelector('.input__file-button').style.opacity = "0.7";
+            if (countFiles)
+                label.querySelector('.input__file-button-text').innerText = 'file selected';
+            else
+                label.querySelector('.input__file-button-text').innerText = labelVal;
+        });
+    });
 </script>
 <?php
 include "page/footer.php";

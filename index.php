@@ -79,7 +79,7 @@ switch ($url) {
         }
         $route = '/user/(?<userSlug>[a-zA-Z0-9_-]+)'; // для пользователя
         if (preg_match("#$route#", $url, $params)) {
-            $page = include 'user/user.php';
+            $page = include 'account/user.php';
         }
 
         $layout = file_get_contents('page/layout.php'); //получение шаблона
