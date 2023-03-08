@@ -25,7 +25,6 @@ if ($_SESSION['auth'] === 'true' and !empty($_SESSION['login'])) :
                 $nameImg = 'default.png';
             }
         }
-        var_dump($_FILES);
         $updateUser = "UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'";
         mysqli_query($link, $updateUser);
     }

@@ -1,17 +1,4 @@
-<?php
 
-$login = $_SESSION['login'];
-$link = require './database/connect.php';
-
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link));
-$favorite = mysqli_fetch_assoc($result);
-if ($favorite["COUNT(*)"] === '0') {
-    $favorite = '';
-} else {
-    $favorite = $favorite["COUNT(*)"];
-}
-?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -29,7 +16,7 @@ if ($favorite["COUNT(*)"] === '0') {
         <div class="container">
             <ul class="header__nav">
                 <li><a href="../index.php" class="header__link">main</a></li>
-                <li><a href="../account/favorite.php" class="header__link favorite"><img src="../images/favorite.svg" class="header__img">favorites <span class="count__add"><?= $favorite ?></span></a></li>
+                <li><a href="../favorite/favorite.php" class="header__link favorite"><img src="../images/favorite.svg" class="header__img">favorites <span class="count__add"><?= $favorite ?></span></a></li>
                 <li><a href="../page/add.php" class="header__link add"><img src="../images/add.svg" class="header__img">place an ad</a></li>
                 <?php
                 if ($_SESSION['status'] === 'admin') : ?>

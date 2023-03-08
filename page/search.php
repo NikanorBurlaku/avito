@@ -19,8 +19,6 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
     
-    var_dump($user);
-    echo "<br><br>";
     $catName = str_replace('_', ' ', $row['catName']); 
     $prodName = str_replace(' ', '_', $row['prodName']);
 
@@ -38,21 +36,9 @@ for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
 
 $content .= '</section>';
 
-
-$query3 = "SELECT * FROM category ORDER BY name";
-$result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
-
-$categories = '';
-
-for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) { //выбираем категории
-    $row['name'] = strtolower($row['name']);
-    $categoryHref = str_replace('_', ' ', $row['name']); 
-    $categories .= "<li><a href='../page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
-}
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
-    'categories' => $categories,
     'url' => '../'
 ];
 

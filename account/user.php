@@ -1,73 +1,61 @@
 <?php
 
-$catSlug = $params['userSlug'];
-
-
+$userSlug = $params['userSlug'];
 $link = require './database/connect.php';
 
-    $query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link)); 
+$selectUser = "SELECT * FROM user WHERE login='$userSlug'";
+$selectUser =  mysqli_query($link, $selectUser) or die(mysqli_error($link));
+$user = mysqli_fetch_assoc($selectUser);
 
-$query1 = "SELECT * FROM product
-WHERE product.id='$prodSlug'";
+$selectProduct = "SELECT * FROM product
+WHERE product.id_user='{$user['id']}'";
+$selectProduct = mysqli_query($link, $selectProduct) or die(mysqli_error($link));
 
-$result = mysqli_query($link, $query1) or die(mysqli_error($link));
-$product = mysqli_fetch_assoc($result);
+$content = ' <section class="tov_section">';
+for ($data = []; $product = mysqli_fetch_assoc($selectProduct); $data[] = $product) {
 
-    $query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($result2);
+    $selectCategory = "SELECT category.name as catName FROM product
+    LEFT JOIN 
+    category ON category.id=product.id_categ
+    WHERE category.id='{$product['id_categ']}'";
+    $result = mysqli_query($link, $selectCategory) or die(mysqli_error($link));
+    $catName = mysqli_fetch_assoc($result);
 
-    $content = "<section class='product__section'>
-    <div class='product__block'>
-        <img src='{{ url }}upload/{$product['img']}' class='product__img'>
-        <div class='product__title'>
-            <h2 class='product__name'>{$product['name']}</h2>
-            <span class='product__date'>{$product['date_create']}</span>
-        </div>
-        <div class='product__decription'>
-            <span class='product__span'>decription</span>
-            <span class='product__text'>{$product['descr']}</span>
-        </div>
-        <div class='product__location'>
-            <span class='product__span'>location</span>
-            <span class='product__text'>{$product['adress']}</span>
-        </div>
-    </div>
-    <div class='contact__block'>
-        <h2 class='product__price'>{$product['price']} $</h2>
-        <button class='show__number'>show phone</button>
-        <button class='send__message'>send meassage</button>
-        <a href='index.php' class='salesmam__block'>
-            <img src='images/salesman.png' class='salesman__img'>
-            <h3 class='salesman__name'>{$user['name']} {$user['surname']}</h3>
-            <span class='salesman__date'>here with {$user['date_reg']}</span>
-            <span class='salesman__review'>reviews: 0</span>
-        </a>
-    </div>
-</section>";
+    $catName = str_replace('_', ' ', $catName['catName']);
+    $prodName = strtolower(str_replace(' ', '_', $product['name']));
 
+    if (!empty($user)) {
+        if ($user['verify'] === 'true') {
+            $verify = '<img class="verify__img" src="{{ url }}images/verify.png">';
+        } else {
+            $verify = '';
+        }
+        if ($user['block'] === 'false') {
 
-
-$query3 = "SELECT * FROM category ORDER BY name";
-$result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
-
-$categories = '';
-
-for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
-    $row['name'] = strtolower($row['name']);
-    $categoryHref = str_replace('_', ' ', $row['name']);
-    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
+            $content .= "<a href='{{ url }}page/$catName/{$product['id']}' class='tov'>
+            <img src='{{ url }}upload/{$product['img']}' class='tov__img'>
+            <span class='tov__head'>{$product['name']}</span>
+            <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
+            <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 
+            <span class='tov__view'><img src='{{ url }}images/view.png' class='views__img'> {$product['view']} 
+            <img src='{{ url }}images/star.png' class='views__img'> 0</span>   
+            </a>";
+        }
+    }
 }
+
+$content .= '</section>';
+
+
+
 $page = [
-    'title' => $product['name'],
+    'title' => 'bulletin board',
     'content' => $content,
-    'categories' => $categories,
-    'url' => '../../'
+    'url' => '../'
 ];
 
 return $page;
 
-?>  
-                
-           
+?>
+
+?>

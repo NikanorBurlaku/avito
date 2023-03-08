@@ -8,8 +8,8 @@ $query1 = "SELECT *, product.id as prodId, category.name as catName, product.nam
 LEFT JOIN 
 category ON category.id=product.id_categ
 WHERE category.name='$catSlug'";
-
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
+
 $content = ' <section class="tov_section">';
 
 for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
@@ -21,6 +21,10 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
     $catName = str_replace('_', ' ', $product['catName']);
     $prodName = strtolower(str_replace(' ', '_', $product['prodName']));
 
+    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
+    $result3 = mysqli_query($link, $selectImg);
+    $productImg = (mysqli_fetch_assoc($result3))['name'];
+
     if (!empty($user)) {
         if ($user['verify'] === 'true') {
             $verify = '<img class="verify__img" src="{{ url }}images/verify.png">';
@@ -30,7 +34,7 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
         if ($user['block'] === 'false') {
 
             $content .= "<a href='{{ url }}page/$catName/{$product['prodId']}' class='tov'>
-            <img src='{{ url }}upload/{$product['img']}' class='tov__img'>
+            <img src='{{ url }}upload/$productImg' class='tov__img'>
             <span class='tov__head'>{$product['prodName']}</span>
             <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
             <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 

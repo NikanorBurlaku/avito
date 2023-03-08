@@ -20,7 +20,10 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
     $catName = str_replace('_', ' ', $product['catName']);
     $prodName = str_replace(' ', '_', $product['prodName']);
 
-    // var_dump($product['prodId']);
+    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
+    $result3 = mysqli_query($link, $selectImg);
+    $productImg = (mysqli_fetch_assoc($result3))['name'];
+    // var_dump($productImg);
     // echo "<br><br><br>";
 
 
@@ -32,7 +35,7 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
         }
         if ($user['block'] === 'false') {
             $content .= "<a href='page/$catName/{$product['prodId']}' class='tov'>
-        <img src='upload/{$product['img']}' class='tov__img'>
+        <img src='upload/$productImg' class='tov__img'>
         <span class='tov__head'>{$product['prodName']}</span>
         <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
         <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 
@@ -45,31 +48,9 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
 
 $content .= '</section>';
 
-$selectCategories = "SELECT * FROM category ORDER BY name";
-$selectCategories = mysqli_query($link, $selectCategories) or die(mysqli_error($link));
-
-$categories = '';
-
-for ($data = []; $category = mysqli_fetch_assoc($selectCategories); $data[] = $category) { //выбираем категории
-    $category['name'] = strtolower($category['name']);
-    $categoryHref = str_replace('_', ' ', $category['name']);
-    $categories .= "<li><a href='page/{$category['name']}' class='link__acide main__link'>$categoryHref</a></li>";
-}
-
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
-$favorite = mysqli_fetch_assoc($result);
-if($favorite["COUNT(*)"] === '0'){
-    $favorite = '';
-} else {
-    $favorite = $favorite["COUNT(*)"];
-}
-
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
-    'categories' => $categories,
-    'favorite' => $favorite,
     'url' => ''
 ];
 

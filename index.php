@@ -4,8 +4,29 @@ session_start();
 
 $url = $_SERVER['REQUEST_URI'];
 $url = str_replace('/avito', '', $url);
+$link = require './database/connect.php';
+$login = $_SESSION['login'];
 
 echo ($url);
+
+$selectCateg = "SELECT * FROM category ORDER BY name";
+$result = mysqli_query($link, $selectCateg) or die(mysqli_error($link));
+$categories = '';
+
+for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
+    $row['name'] = strtolower($row['name']);
+    $categoryHref = str_replace('_', ' ', $row['name']);
+    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
+}
+
+$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
+$result2 = mysqli_query($link, $selectFavorite) or die(mysqli_error($link));
+$favorite = mysqli_fetch_assoc($result2);
+if ($favorite["COUNT(*)"] === '0') {
+    $favorite = '';
+} else {
+    $favorite = $favorite["COUNT(*)"];
+}
 
 switch ($url) {
     case '/account/login.php':
@@ -60,9 +81,9 @@ switch ($url) {
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'page/all.php';
         }
-        $route = '/account/favorite.php'; //для всех товаров
+        $route = '/favorite/favorite.php'; //для всех товаров
         if (preg_match("#$route#", $url, $params)) {
-            $page = include 'account/favorite.php';
+            $page = include 'favorite/favorite.php';
         }
         
         $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)'; // для категории
@@ -105,19 +126,18 @@ switch ($url) {
 
         $layout = str_replace('{{ title }}', $page['title'], $layout); //подставляем title
         $layout = str_replace('{{ content }}', $page['content'], $layout); //подставляем основную часть контента
-        $layout = str_replace('{{ categories }}', $page['categories'], $layout); //подставляем все категории
+        $layout = str_replace('{{ categories }}', $categories, $layout); //подставляем все категории
         if(!empty($_GET['search'])){
             $layout = str_replace('{{ search_input }}', $_GET['search'], $layout); //если в параметре "search" что-то есть
         } else {
             $layout = str_replace('{{ search_input }}', '', $layout); //если в параметре "search" пусто
         }
-        $layout = str_replace('{{ favorite }}', $page['favorite'], $layout); // отображение количества избранных сообщений
-        $layout = str_replace('{{ url }}', $page['url'], $layout); // настраиваем пути
+        $layout = str_replace('{{ favorite }}', $favorite, $layout); // отображение количества избранных сообщений
         $layout = str_replace('{{ auth }}', $auth, $layout); //подставляем ссылки для авторизации/логаута
         $layout = str_replace('{{ admin }}', $admin, $layout); //подставляем ссылки для авторизации/логаута
+        $layout = str_replace('{{ url }}', $page['url'], $layout); // настраиваем пути
 
         echo $layout; //выводим все на экран
         break;
         
 }
-?>

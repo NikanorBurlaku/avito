@@ -25,6 +25,10 @@ for ($data = []; $product = mysqli_fetch_assoc($productArray); $data[] = $produc
     $catName = str_replace('_', ' ', $catName['catName']);
     $prodName = strtolower(str_replace(' ', '_', $product['prodName']));
 
+    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
+    $result3 = mysqli_query($link, $selectImg);
+    $productImg = (mysqli_fetch_assoc($result3))['name'];
+
     if (!empty($user)) {
         if ($user['verify'] === 'true') {
             $verify = '<img class="verify__img" src="{{ url }}images/verify.png">';
@@ -35,7 +39,7 @@ for ($data = []; $product = mysqli_fetch_assoc($productArray); $data[] = $produc
 
 
     $content .= "<a href='{{ url }}page/$catName/{$product['prodId']}' class='tov'>
-        <img src='{{ url }}upload/{$product['img']}' class='tov__img'>
+        <img src='{{ url }}upload/{$productImg}' class='tov__img'>
         <span class='tov__head'>{$product['prodName']}</span>
         <span class='tov__price'> {$product['price']} $ / <span class='tov__date'>{$product['date_create']}</span></span>
         <span class='tov__user'> {$user['name']} {$user['surname']} $verify</span> 
@@ -46,38 +50,11 @@ for ($data = []; $product = mysqli_fetch_assoc($productArray); $data[] = $produc
     }
 }
 
-
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
-$favorite = mysqli_fetch_assoc($result);
-
 $content .= '</section>';
-
-$selectCategories = "SELECT * FROM category ORDER BY name";
-$resultCategory = mysqli_query($link, $selectCategories) or die(mysqli_error($link));
-
-$categories = '';
-
-for ($data = []; $categoryRow = mysqli_fetch_assoc($resultCategory); $data[] = $product) {
-    $categoryRow['name'] = strtolower($categoryRow['name']);
-    $categoryHref = str_replace('_', ' ', $categoryRow['name']);
-    $categories .= "<li><a href='{{ url }}page/{$categoryRow['name']}' class='link__acide main__link'>$categoryHref</a></li>";
-}
-
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
-$favorite = mysqli_fetch_assoc($result);
-if($favorite["COUNT(*)"] === '0'){
-    $favorite = '';
-} else {
-    $favorite = $favorite["COUNT(*)"];
-}
 
 $page = [
     'title' => 'favorite add',
     'content' => $content,
-    'categories' => $categories,
-    'favorite' => $favorite,
     'url' => '../'
 ];
 

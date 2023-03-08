@@ -19,6 +19,10 @@ $product = mysqli_fetch_assoc($result);
     $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result2);
 
+    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
+    $result3 = mysqli_query($link, $selectImg);
+    $productImg = (mysqli_fetch_assoc($result3))['name'];
+
     $content = "<section class='product__section'>
     <div class='product__block'>
 
@@ -26,7 +30,7 @@ $product = mysqli_fetch_assoc($result);
     <h2 class='product__name'>{$product['name']}</h2>
 </div>
     <div class='product__block--head__img'>
-        <img src='{{ url }}upload/{$product['img']}' class='product__img'>
+        <img src='{{ url }}upload/{$productImg}' class='product__img'>
         </div>
         <div class='product__decription'>
             <span class='product__span'>decription</span>
@@ -43,11 +47,12 @@ $product = mysqli_fetch_assoc($result);
        </div>
     </div>
     <div class='contact__block'>
-        <button class='send__message'>send meassage</button>
         <a href='{{ url }}user/{$user['login']}' class='salesmam__block'>
             <img src='{{ url }}upload/{$user['img']}' class='salesman__img--ava'>
             <h3 class='salesman__name'>{$user['name']} {$user['surname']}</h3>
         </a>
+        <a class='send__message'>send meassage</a>
+        <a href='{{ url }}user/{$user['login']}' class='send__message'>view all ads</a>
             <p class='salesmam__block'>
             <img src='{{ url }}images/calendar.png' class='salesman__img'> here with {$user['date_reg']}
             </p>
@@ -85,32 +90,9 @@ $product = mysqli_fetch_assoc($result);
 </section>";
 
 
-
-$query3 = "SELECT * FROM category ORDER BY name";
-$result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
-
-$categories = '';
-
-for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
-    $row['name'] = strtolower($row['name']);
-    $categoryHref = str_replace('_', ' ', $row['name']);
-    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
-}
-
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link)); 
-$favorite = mysqli_fetch_assoc($result);
-if($favorite["COUNT(*)"] === '0'){
-    $favorite = '';
-} else {
-    $favorite = $favorite["COUNT(*)"];
-}
-
 $page = [
     'title' => $product['name'],
     'content' => $content,
-    'categories' => $categories,
-    'favorite' => $favorite,
     'url' => '../../'
 ];
 
