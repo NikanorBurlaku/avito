@@ -8,12 +8,12 @@ function gen_password($length = 6)
 $code = gen_password(6);
 $code = '111'; //после завершения всех работ обязательно убрать это!!!
 
-$to = $_REQUEST['email'];
+$to = 'nicanorburlacu@gmail.com';
 $subject = 'nicanorburlacu@gmail.com';
 $message = 'your code: ' . $code;
 $headers = "from: bulletin board";
 mail($to, $subject, $message, $headers);
-echo(var_dump($to, $subject, $message, $headers));
+echo(var_dump(mail($to, $subject, $message, $headers)));
 
     include "page/header.php";
 ?>

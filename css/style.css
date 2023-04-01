@@ -147,6 +147,7 @@ body {
     width: 32%;
     display: flex;
     flex-direction: column;
+    justify-content: end;
     align-items: start;
     margin-top: 30px;
 }
@@ -387,13 +388,24 @@ body {
 .product__block {
     width: 65%;
 }
+.slider{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+.arrow__left,
+.arrow__right{
+    width: 20px;
+    cursor: pointer;
+}
 .product__block--head__img{
     display: flex;
     justify-content: center;
 }
 .product__img {
     display: block;
-    width: auto;
+    width: 85%;
     height: auto;
     max-width: 400px;
     border-radius: 4px;

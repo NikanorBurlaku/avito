@@ -7,23 +7,22 @@ $selectProduct = "SELECT *, product.id as prodId, category.name as catName, prod
 LEFT JOIN 
 category ON category.id=product.id_categ"; //выбираем продукт, а через inner join выбираем данные из других таблиц
 
-$result = mysqli_query($link, $selectProduct) or die(mysqli_error($link));
+$result = $link->query($selectProduct);
 $content = ' <section class="tov_section">'; //заполняем поля для товара
 
-
-for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
+while($product = $result->fetch_assoc()){
 
     $selectUser = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $result2 = mysqli_query($link, $selectUser) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($result2);
+    $result2 = $link->query($selectUser);
+    $user = $result2->fetch_assoc();
 
     $catName = str_replace('_', ' ', $product['catName']);
     $prodName = str_replace(' ', '_', $product['prodName']);
 
-    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
-    $result3 = mysqli_query($link, $selectImg);
-    $productImg = (mysqli_fetch_assoc($result3))['name'];
-    // var_dump($productImg);
+    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['prodId']}'";
+    $result3 = $link->query($selectImg);
+    $productImg = $result3->fetch_assoc()['name'];
+    // var_dump($product['id']);
     // echo "<br><br><br>";
 
 

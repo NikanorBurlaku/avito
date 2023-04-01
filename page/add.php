@@ -1,5 +1,5 @@
 <?php include "page/header.php";
-if (!empty($_SESSION['auth'])):
+if (!empty($_SESSION['auth'])) :
 ?>
     <div class="main__table">
         <div class="login__block">
@@ -23,13 +23,13 @@ if (!empty($_SESSION['auth'])):
                     ?>
                 </select>
                 <textarea type="text" class="form__textarea" name="descr" placeholder="description" require></textarea>
-                <input type="text" class="form__input" name="price" placeholder="price ($)" require>
+                <input type="number" class="form__input" name="price" placeholder="price ($)" require>
                 <input type="text" class="form__input" name="adress" placeholder="adress" require>
                 <div class="input__wrapper">
                     <input name="file[]" type="file" id="input__file" class="input input__file" multiple>
                     <label for="input__file" class="input__file-button">
                         <span class="input__file-icon-wrapper"><img class="input__file-icon" src="../images/upload.svg" alt="select file" width="25"></span>
-                        <span class="input__file-button-text">select file</span>
+                        <span class="input__file-button-text">select file (max: 10)</span>
                     </label>
                 </div>
                 <input type="submit" class="form__submit" value="add">
@@ -38,7 +38,7 @@ if (!empty($_SESSION['auth'])):
     </div>
 <?php else : ?>
     <p class="error_text">please <a href="/login.php">sign in</a> or <a href="/register.php">sign up</a></p>
-<?php endif; 
+<?php endif;
 
 
 
@@ -84,12 +84,13 @@ if (!empty($_REQUEST)) {
     if (empty($_FILES)) {  //выбор имени для картинки
         $putImg = "INSERT INTO image SET
         product_id='$prodId',
-        name='default.png'";//если пользователь не загрузил картинку, то ставим по умолчанию
+        name='default.png'"; //если пользователь не загрузил картинку, то ставим по умолчанию
         $result6 = mysqli_query($link, $putImg);
     } else {
 
         for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
-            $nameImg = str_replace(' ', '_', ($_REQUEST['name'] . "_" . $i+1 . "." . substr(($_FILES["file"]["type"][$i]), 6))); //если загрузил, то привязывем к имени товара, но это нужно будет исправить и заменить на цикл
+            $nameImg = str_replace(' ', '_', ($_REQUEST['name'] . "_" . $i + 1 . "." . substr(($_FILES["file"]["type"][$i]), 6))); //если загрузил, то привязывем к имени товара, но это нужно будет исправить и заменить на цикл
+
             if ($_FILES['file']['error'][$i] == UPLOAD_ERR_OK) { //загружаем файл на сервер
                 $tmp_name = $_FILES['file']['tmp_name'][$i];
                 $name = "upload/" . $nameImg;
@@ -98,6 +99,11 @@ if (!empty($_REQUEST)) {
                 product_id='$prodId',
                 name='$nameImg'"; 
                 $result6 = mysqli_query($link, $putImg);
+                echo "result 6 ok <br>";
+            }
+            if ($i >= 9) {
+                echo "break";
+                break;
             }
         }
     }
@@ -118,15 +124,16 @@ if (!empty($_REQUEST)) {
             if (this.files && this.files.length >= 1)
                 countFiles = this.files.length;
 
-            if (countFiles)
+            if (countFiles) {
                 label.querySelector('.input__file-button-text').innerText = 'selected files: ' + countFiles;
-            else
+            } else {
                 label.querySelector('.input__file-button-text').innerText = labelVal;
+            }
         });
     });
-        document.querySelector("title").innerHTML = title;
-    </script>
-    <script src="../js/script.js"></script>
+    document.querySelector("title").innerHTML = title;
+</script>
+<script src="../js/script.js"></script>
 </body>
 
 </html>

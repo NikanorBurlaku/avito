@@ -6,8 +6,8 @@ $prodSlug = $params['prodSlug'];
 $login = $_SESSION['login'];
 $link = require './database/connect.php';
 
-    $query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link)); 
+$query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 $query1 = "SELECT * FROM product
 WHERE product.id='$prodSlug'";
@@ -15,23 +15,53 @@ WHERE product.id='$prodSlug'";
 $result = mysqli_query($link, $query1) or die(mysqli_error($link));
 $product = mysqli_fetch_assoc($result);
 
-    $query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($result2);
+$query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
+$result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
+$user = mysqli_fetch_assoc($result2);
 
-    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
-    $result3 = mysqli_query($link, $selectImg);
+$selectCoutImg = "SELECT count(*) FROM image WHERE product_id ='{$product['id']}'";
+$result4 = mysqli_query($link, $selectCoutImg);
+$coutImg = (mysqli_fetch_assoc($result4))['count(*)'];
+
+$selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}'";
+$result3 = mysqli_query($link, $selectImg);
+
+
+if ($coutImg >= '2') {
+    $productImg = 'default.png';
+    $imgArray = array();
+
+    for ($data = []; $image = mysqli_fetch_assoc($result3); $data[] = $image) {
+        array_push($imgArray, $image['name']);
+    }
+    $imgArray = json_encode($imgArray);
+    $imgBlock = "
+            <div class='slider'>
+            <img class='arrow__left' src='{{ url }}images/arrow-left.svg'>
+            <img src='' class='product__img'>
+            <script>let images = ($imgArray);
+            let url = '{{ url }}';
+            </script>
+        <img class='arrow__right' src='{{ url }}images/arrow-right.svg'>
+            </div>";
+    var_dump($imgArray);
+
+    // $productImg = '<script>let array=""</script>'
+
+} elseif ($coutImg == '1') {
     $productImg = (mysqli_fetch_assoc($result3))['name'];
-
-    $content = "<section class='product__section'>
+    $imgBlock = " <img src='{{ url }}upload/" . $productImg . "' class='product__img'>";
+} else {
+    $productImg = 'default.png';
+    $imgBlock = "<img src='{{ url }}upload/" . $productImg . "' class='product__img'>";
+}
+$content = "<section class='product__section'>
     <div class='product__block'>
 
     <div class='product__title'>
     <h2 class='product__name'>{$product['name']}</h2>
 </div>
-    <div class='product__block--head__img'>
-        <img src='{{ url }}upload/{$productImg}' class='product__img'>
-        </div>
+    <div class='product__block--head__img'>$imgBlock</div>
         <div class='product__decription'>
             <span class='product__span'>decription</span>
             <span class='product__text'>{$product['descr']}</span>
@@ -63,30 +93,30 @@ $product = mysqli_fetch_assoc($result);
             {$product['price']} $
             </p>";
 
-            $isInFavorite = "SELECT * FROM favorite WHERE login='$login' AND id_product='{$product['id']}'";
-            $resultFavorite = mysqli_query($link, $isInFavorite);
-            $isInFavorite = mysqli_fetch_assoc($resultFavorite);
-           
-            if(!empty($isInFavorite)){
-                $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
+$isInFavorite = "SELECT * FROM favorite WHERE login='$login' AND id_product='{$product['id']}'";
+$resultFavorite = mysqli_query($link, $isInFavorite);
+$isInFavorite = mysqli_fetch_assoc($resultFavorite);
+
+if (!empty($isInFavorite)) {
+    $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
                 <input type='hidden' name='id' value={$product['id']}>
                 <button type='submit' class='favorite__button'>
                 <img src='{{ url }}images/favorite_close.png' id='favorite_img' class='salesman__img'> 
                 <span id='favorite_text'>remove from favorites</span>
                 </button>
                 </form>";
-            } else {
-                $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
+} else {
+    $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>
                 <input type='hidden' name='id' value={$product['id']}>
                 <button type='submit' class='favorite__button'>
                 <img src='{{ url }}images/favorite_open.png' id='favorite_img' class='salesman__img'> 
                 <span id='favorite_text'>add to favorites</span>
                 </button>
                 </form>";
-            }
+}
 
-            
-    $content .= "</div>
+
+$content .= "</div>
 </section>";
 
 
