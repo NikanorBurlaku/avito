@@ -6,32 +6,24 @@ $prodSlug = $params['prodSlug'];
 $login = $_SESSION['login'];
 $link = require './database/connect.php';
 
-$query = "UPDATE product SET view = view + 1 WHERE id='$prodSlug'";
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
+$updateView = $link->query("UPDATE product SET view = view + 1 WHERE id='$prodSlug'");
 
-$query1 = "SELECT * FROM product
-WHERE product.id='$prodSlug'";
+$selectProduct = $link->query("SELECT * FROM product WHERE product.id='$prodSlug'");
+$product = $selectProduct->fetch_assoc();
 
-$result = mysqli_query($link, $query1) or die(mysqli_error($link));
-$product = mysqli_fetch_assoc($result);
+$selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
+$user = $selectUser->fetch_assoc();
 
-$query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-$result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
-$user = mysqli_fetch_assoc($result2);
+$selectCoutImg = $link->query("SELECT count(*) FROM image WHERE product_id ='{$product['id']}'");
+$coutImg = $selectCoutImg->fetch_assoc()['count(*)'];
 
-$selectCoutImg = "SELECT count(*) FROM image WHERE product_id ='{$product['id']}'";
-$result4 = mysqli_query($link, $selectCoutImg);
-$coutImg = (mysqli_fetch_assoc($result4))['count(*)'];
-
-$selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}'";
-$result3 = mysqli_query($link, $selectImg);
-
+$images = $link->query("SELECT * FROM image WHERE product_id ='{$product['id']}'");
 
 if ($coutImg >= '2') {
     $productImg = 'default.png';
     $imgArray = array();
 
-    for ($data = []; $image = mysqli_fetch_assoc($result3); $data[] = $image) {
+    for ($data = []; $image = mysqli_fetch_assoc($images); $data[] = $image) {
         array_push($imgArray, $image['name']);
     }
     $imgArray = json_encode($imgArray);
@@ -44,12 +36,11 @@ if ($coutImg >= '2') {
             </script>
         <img class='arrow__right' src='{{ url }}images/arrow-right.svg'>
             </div>";
-    var_dump($imgArray);
 
     // $productImg = '<script>let array=""</script>'
 
 } elseif ($coutImg == '1') {
-    $productImg = (mysqli_fetch_assoc($result3))['name'];
+    $productImg = (mysqli_fetch_assoc($images))['name'];
     $imgBlock = " <img src='{{ url }}upload/" . $productImg . "' class='product__img'>";
 } else {
     $productImg = 'default.png';
@@ -93,9 +84,8 @@ $content = "<section class='product__section'>
             {$product['price']} $
             </p>";
 
-$isInFavorite = "SELECT * FROM favorite WHERE login='$login' AND id_product='{$product['id']}'";
-$resultFavorite = mysqli_query($link, $isInFavorite);
-$isInFavorite = mysqli_fetch_assoc($resultFavorite);
+$resultFavorite = $link->query("SELECT * FROM favorite WHERE login='$login' AND id_product='{$product['id']}'");
+$isInFavorite = $resultFavorite->fetch_assoc();
 
 if (!empty($isInFavorite)) {
     $content .= "<form action='{{ url }}favorite/changeFavorite.php' method='POST' id='favorite_click' class='salesmam__block'>

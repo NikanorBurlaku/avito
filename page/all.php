@@ -3,25 +3,22 @@
 
 $login = $_SESSION['login'];
 $link = require './database/connect.php';
-$selectProduct = "SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
-LEFT JOIN 
-category ON category.id=product.id_categ"; //выбираем продукт, а через inner join выбираем данные из других таблиц
 
-$result = $link->query($selectProduct);
+$selectProduct = $link->query("SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
+LEFT JOIN 
+category ON category.id=product.id_categ"); //выбираем продукт, а через inner join выбираем данные из других таблиц
 $content = ' <section class="tov_section">'; //заполняем поля для товара
 
-while($product = $result->fetch_assoc()){
+while ($product = $selectProduct->fetch_assoc()) {
 
-    $selectUser = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $result2 = $link->query($selectUser);
-    $user = $result2->fetch_assoc();
+    $selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
+    $user = $selectUser->fetch_assoc();
 
     $catName = str_replace('_', ' ', $product['catName']);
     $prodName = str_replace(' ', '_', $product['prodName']);
 
-    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['prodId']}'";
-    $result3 = $link->query($selectImg);
-    $productImg = $result3->fetch_assoc()['name'];
+    $selectImg = $link->query("SELECT * FROM image WHERE product_id ='{$product['prodId']}'");
+    $productImg = $selectImg->fetch_assoc()['name'];
     // var_dump($product['id']);
     // echo "<br><br><br>";
 

@@ -7,19 +7,19 @@ $selectUser = "SELECT * FROM user WHERE login='$userSlug'";
 $selectUser =  mysqli_query($link, $selectUser) or die(mysqli_error($link));
 $user = mysqli_fetch_assoc($selectUser);
 
-$selectProduct = "SELECT * FROM product
-WHERE product.id_user='{$user['id']}'";
-$selectProduct = mysqli_query($link, $selectProduct) or die(mysqli_error($link));
+$selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
+$user = $selectUser->fetch_assoc();
+
+$selectProduct = $link->query("SELECT * FROM product WHERE product.id_user='{$user['id']}'");
 
 $content = ' <section class="tov_section">';
 for ($data = []; $product = mysqli_fetch_assoc($selectProduct); $data[] = $product) {
 
-    $selectCategory = "SELECT category.name as catName FROM product
-    LEFT JOIN 
-    category ON category.id=product.id_categ
-    WHERE category.id='{$product['id_categ']}'";
-    $result = mysqli_query($link, $selectCategory) or die(mysqli_error($link));
-    $catName = mysqli_fetch_assoc($result);
+    $selectCategory = $link->query("SELECT category.name as catName FROM product
+LEFT JOIN 
+category ON category.id=product.id_categ
+WHERE category.id='{$product['id_categ']}'");
+    $catName = $selectCategory->fetch_assoc();
 
     $catName = str_replace('_', ' ', $catName['catName']);
     $prodName = strtolower(str_replace(' ', '_', $product['name']));

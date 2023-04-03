@@ -25,13 +25,12 @@ if ($_SESSION['auth'] === 'true' and !empty($_SESSION['login'])) :
                 $nameImg = 'default.png';
             }
         }
-        $updateUser = "UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'";
-        mysqli_query($link, $updateUser);
+
+        $link->query("UPDATE user SET name='$name', surname='$surname', phone='$phone', email='$email', img='$nameImg' WHERE login='$login'");
     }
 
-    $selectUser = "SELECT * FROM user WHERE login='$login'";
-    $result = mysqli_query($link, $selectUser);
-    $user = mysqli_fetch_assoc($result);
+    $selectUser = $link->query("SELECT * FROM user WHERE login='$login'");
+    $user = $selectUser->fetch_assoc();
 ?>
     <div class="main__table">
         <div class="login__block">

@@ -9,19 +9,17 @@ $login = $_SESSION['login'];
 
 echo ($url);
 
-$selectCateg = "SELECT * FROM category ORDER BY name";
-$result = mysqli_query($link, $selectCateg) or die(mysqli_error($link));
+$selectCateg = $link->query("SELECT * FROM category ORDER BY name");
 $categories = '';
 
-for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
+for ($data = []; $row = mysqli_fetch_assoc($selectCateg); $data[] = $row) {
     $row['name'] = strtolower($row['name']);
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result2 = mysqli_query($link, $selectFavorite) or die(mysqli_error($link));
-$favorite = mysqli_fetch_assoc($result2);
+$selectFavorite = $link->query("SELECT COUNT(*) FROM favorite WHERE login='$login'");
+$favorite = $selectFavorite->fetch_assoc();
 if ($favorite["COUNT(*)"] === '0') {
     $favorite = '';
 } else {

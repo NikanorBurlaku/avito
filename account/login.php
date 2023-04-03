@@ -22,11 +22,11 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password'])) { // пров�
 
     $login = $_REQUEST['login'];
     $password = $_REQUEST['password'];
-
     $link = require "database/connect.php";
-    $query = "SELECT login, password, status, block FROM user WHERE login='$login'";
-    $result = mysqli_query($link, $query) or die($link);
-    $user = mysqli_fetch_assoc($result);
+
+    $result = $link->query("SELECT login, password, status, block FROM user WHERE login='$login'");
+    $user = $result->fetch_assoc();
+
 
     if (!empty($user)) {
 

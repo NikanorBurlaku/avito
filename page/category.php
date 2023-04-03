@@ -4,26 +4,24 @@ $login = $_SESSION['login'];
 $catSlug = $params['catSlug'];
 
 $link = require './database/connect.php';
-$query1 = "SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
+
+$selectProduct = $link->query("SELECT *, product.id as prodId, category.name as catName, product.name as prodName FROM product
 LEFT JOIN 
 category ON category.id=product.id_categ
-WHERE category.name='$catSlug'";
-$result = mysqli_query($link, $query1) or die(mysqli_error($link));
+WHERE category.name='$catSlug'");
 
-$content = ' <section class="tov_section">';
+$content = '<section class="tov_section">';
 
-for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
+for ($data = []; $product = mysqli_fetch_assoc($selectProduct); $data[] = $product) {
 
-    $query2 = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($result2);
+    $selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
+    $user = $selectUser->fetch_assoc();
 
     $catName = str_replace('_', ' ', $product['catName']);
     $prodName = strtolower(str_replace(' ', '_', $product['prodName']));
 
-    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
-    $result3 = mysqli_query($link, $selectImg);
-    $productImg = (mysqli_fetch_assoc($result3))['name'];
+    $selectImg = $link->query("SELECT * FROM image WHERE product_id ='{$product['prodId']}'");
+    $productImg = $selectImg->fetch_assoc()['name'];
 
     if (!empty($user)) {
         if ($user['verify'] === 'true') {
@@ -47,20 +45,19 @@ for ($data = []; $product = mysqli_fetch_assoc($result); $data[] = $product) {
 
 $content .= '</section>';
 
-$query3 = "SELECT * FROM category ORDER BY name";
-$result3 = mysqli_query($link, $query3) or die(mysqli_error($link));
+$selectCategory = $link->query("SELECT * FROM category ORDER BY name");
 
 $categories = '';
 
-for ($data = []; $row = mysqli_fetch_assoc($result3); $data[] = $row) {
+for ($data = []; $row = mysqli_fetch_assoc($selectCategory); $data[] = $row) {
     $row['name'] = strtolower($row['name']);
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
 }
 
-$selectFavorite = "SELECT COUNT(*) FROM favorite WHERE login='$login'";
-$result = mysqli_query($link, $selectFavorite) or die(mysqli_error($link));
-$favorite = mysqli_fetch_assoc($result);
+$selectFavorite = $link->query("SELECT COUNT(*) FROM favorite WHERE login='$login'");
+    $favorite = $selectFavorite->fetch_assoc();
+
 if ($favorite["COUNT(*)"] === '0') {
     $favorite = '';
 } else {
