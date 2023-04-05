@@ -61,8 +61,9 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_RE
     $date_reg = date("Y-m-d");
 
     $link = require "database/connect.php";
-    $query1 = "SELECT login FROM user WHERE login='$login'";
-    $user = mysqli_fetch_assoc(mysqli_query($link, $query1));
+
+    $selectUser = $link->query("SELECT login FROM user WHERE login='$login'");
+    $user = $selectUser->fetch_assoc();
 
     if (empty($user)){
 
@@ -87,7 +88,7 @@ if (!empty($_REQUEST['login']) and !empty($_REQUEST['password']) and !empty($_RE
             block='false',
             img='$img',
             date_reg='$date_reg'";
-            mysqli_query($link, $query2) or die(mysqli_error($link));
+            $link->query($query2);
 
             if ($_FILES && $_FILES['file']['error'] == UPLOAD_ERR_OK) { //загружаем файл на сервер
                 $name = "upload/" . $img;

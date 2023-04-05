@@ -23,7 +23,7 @@ if ($coutImg >= '2') {
     $productImg = 'default.png';
     $imgArray = array();
 
-    for ($data = []; $image = mysqli_fetch_assoc($images); $data[] = $image) {
+    for ($data = []; $image = $images->fetch_assoc(); $data[] = $image) {
         array_push($imgArray, $image['name']);
     }
     $imgArray = json_encode($imgArray);
@@ -40,7 +40,7 @@ if ($coutImg >= '2') {
     // $productImg = '<script>let array=""</script>'
 
 } elseif ($coutImg == '1') {
-    $productImg = (mysqli_fetch_assoc($images))['name'];
+    $productImg = $images->fetch_assoc()['name'];
     $imgBlock = " <img src='{{ url }}upload/" . $productImg . "' class='product__img'>";
 } else {
     $productImg = 'default.png';

@@ -29,7 +29,7 @@ if($_SESSION['status'] === 'admin'){
         <td class='table__cell'>block user</td>
         <td class='table__cell'>delete user</td>
         </thead><tbody>";
-    for($data = []; $user = mysqli_fetch_assoc($selectUser); $data[] = $user){
+    for($data = []; $user = $selectUser->fetch_assoc(); $data[] = $user){
 
         if($user['block'] === 'true'){
             echo "<tr class='block__cell'>";

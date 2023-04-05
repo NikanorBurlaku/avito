@@ -3,17 +3,13 @@
 $userSlug = $params['userSlug'];
 $link = require './database/connect.php';
 
-$selectUser = "SELECT * FROM user WHERE login='$userSlug'";
-$selectUser =  mysqli_query($link, $selectUser) or die(mysqli_error($link));
-$user = mysqli_fetch_assoc($selectUser);
-
 $selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
 $user = $selectUser->fetch_assoc();
 
+$content = ' <section class="tov_section">';
 $selectProduct = $link->query("SELECT * FROM product WHERE product.id_user='{$user['id']}'");
 
-$content = ' <section class="tov_section">';
-for ($data = []; $product = mysqli_fetch_assoc($selectProduct); $data[] = $product) {
+for ($data = []; $product = $selectProduct->fetch_assoc(); $data[] = $product) {
 
     $selectCategory = $link->query("SELECT category.name as catName FROM product
 LEFT JOIN 

@@ -10,12 +10,11 @@ if (!empty($_SESSION['auth'])) :
                     <option value="select category">select category</option>
                     <?php
                     $link = require './database/connect.php';
-                    $selectCategory = "SELECT * FROM category ORDER BY name";
-                    $result = mysqli_query($link, $selectCategory) or die(mysqli_error($link));
 
+                    $selectCategory = $link->query("SELECT * FROM category ORDER BY name");
                     $categories = '';
 
-                    for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row) {
+                    for ($data = []; $row = $selectCategory->fetch_assoc(); $data[] = $row) {
                         $row['name'] = strtolower($row['name']);
                         $catName = str_replace('_', ' ', $row['name']);
                         echo "<option value='{$row['name']}'>$catName</option>";
@@ -57,13 +56,11 @@ if (!empty($_REQUEST)) {
     $adress = $_REQUEST['adress'];
     $dateCreate = date("Y-m-d H:i");
 
-    $selectUser = "SELECT id FROM user WHERE login='$login'"; //выбираем id юзера по логину, который в сессии и ниже добавляем его в качестве владельца
-    $result2 = mysqli_query($link, $selectUser);
-    $userId = (mysqli_fetch_assoc($result2))['id'];
+    $selectUser = $link->query("SELECT id FROM user WHERE login='$login'");//выбираем id юзера по логину, который в сессии и ниже добавляем его в качестве владельца
+    $userId = $selectUser->fetch_assoc()['id'];
 
-    $selectCategoryId = "SELECT id FROM category WHERE name='$category'"; //выбираем id категории
-    $result3 = mysqli_query($link, $selectCategoryId);
-    $catId = (mysqli_fetch_assoc($result3))['id'];
+    $selectCategoryId = $link->query("SELECT id FROM category WHERE name='$category'"); //выбираем id категории
+    $catId = $selectCategoryId->fetch_assoc()['id'];
 
     $createAdd = "INSERT INTO product SET
     id_categ='$catId',
@@ -75,17 +72,13 @@ if (!empty($_REQUEST)) {
     adress='$adress',
     date_create='$dateCreate'
     ";
-    $result4 = mysqli_query($link, $createAdd) or die(mysqli_error($link));
+    $link->query($createAdd);
 
-    $selectProuctId = "SELECT id FROM product ORDER BY id DESC LIMIT 1";
-    $result5 = mysqli_query($link, $selectProuctId);
-    $prodId = (mysqli_fetch_assoc($result5))['id'];
+    $selectProuctId = $link->query("SELECT id FROM product ORDER BY id DESC LIMIT 1");
+    $prodId = $selectProuctId->fetch_assoc()['id'];
 
     if (empty($_FILES)) {  //выбор имени для картинки
-        $putImg = "INSERT INTO image SET
-        product_id='$prodId',
-        name='default.png'"; //если пользователь не загрузил картинку, то ставим по умолчанию
-        $result6 = mysqli_query($link, $putImg);
+        $link->query("INSERT INTO image SET product_id='$prodId', name='default.png'"); //если пользователь не загрузил картинку, то ставим по умолчанию
     } else {
 
         for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
@@ -98,11 +91,9 @@ if (!empty($_REQUEST)) {
                 $putImg = "INSERT INTO image SET
                 product_id='$prodId',
                 name='$nameImg'"; 
-                $result6 = mysqli_query($link, $putImg);
-                echo "result 6 ok <br>";
+                $$link->quety("INSERT INTO image SET product_id='$prodId', name='$nameImg'");
             }
             if ($i >= 9) {
-                echo "break";
                 break;
             }
         }

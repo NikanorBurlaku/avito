@@ -8,26 +8,23 @@ LEFT JOIN
 favorite ON favorite.id_product=product.id
 WHERE favorite.login='$login'";
 
-$productArray = mysqli_query($link, $selectProduct) or die(mysqli_error($link));
+$productArray = $link->query($selectProduct);
 $content = ' <section class="tov_section">';
 
-for ($data = []; $product = mysqli_fetch_assoc($productArray); $data[] = $product) {
+for ($data = []; $product = $productArray->fetch_assoc(); $data[] = $product) {
 
-    $selectUser = "SELECT * FROM user WHERE id='{$product['id_user']}'";
-    $user = mysqli_query($link, $selectUser) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($user);
+    $selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
+    $user = $selectUser->fetch_assoc();
 
-    $selectCategory = "SELECT category.name as catName FROM category
-    WHERE category.id='{$product['id_categ']}'";
-    $category = mysqli_query($link, $selectCategory) or die(mysqli_error($link));
-    $catName = mysqli_fetch_assoc($category);
+    $selectCategory = $link->query("SELECT category.name as catName FROM category
+    WHERE category.id='{$product['id_categ']}'");
+    $catName = $selectCategory->fetch_assoc();
 
     $catName = str_replace('_', ' ', $catName['catName']);
     $prodName = strtolower(str_replace(' ', '_', $product['prodName']));
 
-    $selectImg = "SELECT * FROM image WHERE product_id ='{$product['id']}' LIMIT 1";
-    $result3 = mysqli_query($link, $selectImg);
-    $productImg = (mysqli_fetch_assoc($result3))['name'];
+    $selectImg = $link->query("SELECT * FROM image WHERE product_id ='{$product['prodId']}'");
+    $productImg = $selectImg->fetch_assoc()['name'];
 
     if (!empty($user)) {
         if ($user['verify'] === 'true') {

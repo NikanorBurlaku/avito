@@ -12,7 +12,7 @@ WHERE category.name='$catSlug'");
 
 $content = '<section class="tov_section">';
 
-for ($data = []; $product = mysqli_fetch_assoc($selectProduct); $data[] = $product) {
+for ($data = []; $product = $selectProduct->fetch_assoc(); $data[] = $product) {
 
     $selectUser = $link->query("SELECT * FROM user WHERE id='{$product['id_user']}'");
     $user = $selectUser->fetch_assoc();
@@ -49,7 +49,7 @@ $selectCategory = $link->query("SELECT * FROM category ORDER BY name");
 
 $categories = '';
 
-for ($data = []; $row = mysqli_fetch_assoc($selectCategory); $data[] = $row) {
+for ($data = []; $row = $selectCategory->fetch_assoc(); $data[] = $row) {
     $row['name'] = strtolower($row['name']);
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";

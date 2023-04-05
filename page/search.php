@@ -13,7 +13,7 @@ WHERE product.name LIKE '%$search%' OR product.descr LIKE '%$search%'");  //вы
 $content = ' <section class="tov_section">'; //заполняем поля для товара
 
 
-for ($data = []; $row = mysqli_fetch_assoc($selectProduct); $data[] = $row) {
+for ($data = []; $row = $selectProduct->fetch_assoc(); $data[] = $row) {
 
     $selectUser = $link->query("SELECT * FROM user WHERE id='{$row['id_user']}'"); //получаем данные продавца, который разместил объявление
     $user = $selectUser->fetch_assoc();

@@ -12,7 +12,7 @@ echo ($url);
 $selectCateg = $link->query("SELECT * FROM category ORDER BY name");
 $categories = '';
 
-for ($data = []; $row = mysqli_fetch_assoc($selectCateg); $data[] = $row) {
+for ($data = []; $row = $selectCateg->fetch_assoc(); $data[] = $row) {
     $row['name'] = strtolower($row['name']);
     $categoryHref = str_replace('_', ' ', $row['name']);
     $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
