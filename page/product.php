@@ -72,7 +72,7 @@ $content = "<section class='product__section'>
             <img src='{{ url }}upload/{$user['img']}' class='salesman__img--ava'>
             <h3 class='salesman__name'>{$user['name']} {$user['surname']}</h3>
         </a>
-        <a class='send__message'>send meassage</a>
+        <a href='{{ url }}message/message.php?{$user['login']}' class='send__message'>send meassage</a>
         <a href='{{ url }}user/{$user['login']}' class='send__message'>view all ads</a>
             <p class='salesmam__block'>
             <img src='{{ url }}images/calendar.png' class='salesman__img'> here with {$user['date_reg']}

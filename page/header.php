@@ -27,6 +27,7 @@
                 if ($_SESSION['auth'] === 'true') :
                 ?>
                     <li><a href="../account/account.php" id="account" class="header__link">account</a></li>
+                    <li><a href="../message/list.php" id="account" class="header__link">messages</a></li>
                     <li><a href="../account/logout.php" id="logout" class="header__link">log out</a></li>
                 <?php else : ?>
 

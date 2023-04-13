@@ -69,6 +69,15 @@ switch ($url) {
     case str_contains($url, 'admin/deleteUser'):
         require_once 'admin/deleteUser.php';
         break;
+    case str_contains($url, 'message/message.php'):
+        require_once 'message/message.php';
+        break;
+    case str_contains($url, 'message/list.php'):
+        require_once 'message/list.php';
+        break;
+        case str_contains($url, 'message/send_message.php'):
+            require_once 'message/send_message.php';
+            break;
 
     default:
         $route = '/'; //для всех товаров
@@ -83,7 +92,7 @@ switch ($url) {
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'favorite/favorite.php';
         }
-        
+
         $route = '/page/(?<catSlug>[a-zA-Z0-9_-]+)'; // для категории
         if (preg_match("#$route#", $url, $params)) {
             $page = include 'page/category.php';
@@ -113,10 +122,12 @@ switch ($url) {
 
         if (!empty($_SESSION['auth'])) { //проверка на авторизацию
             $auth = '<li><a href="{{ url }}account/account.php" id="account" class="header__link">account</a></li>
+            <li><a href="../message/list.php" id="account" class="header__link">messages</a></li>
             <li><a href="{{ url }}account/logout.php" id="logout" class="header__link">log out</a></li>';
             $auth = str_replace('{{ url }}', $page['url'], $auth); //настраиваем путь
         } else {
-            $auth = '<li><a href="{{ url }}account/login.php" class="header__link">sign in</a> </li>
+            $auth = '
+            <li><a href="{{ url }}account/login.php" class="header__link">sign in</a> </li>
         <li><a href="{{ url }}account/register.php" class="header__link">sign up</a></li>';
             $auth = str_replace('{{ url }}', $page['url'], $auth); //настраиваем путь
         }
@@ -125,7 +136,7 @@ switch ($url) {
         $layout = str_replace('{{ title }}', $page['title'], $layout); //подставляем title
         $layout = str_replace('{{ content }}', $page['content'], $layout); //подставляем основную часть контента
         $layout = str_replace('{{ categories }}', $categories, $layout); //подставляем все категории
-        if(!empty($_GET['search'])){
+        if (!empty($_GET['search'])) {
             $layout = str_replace('{{ search_input }}', $_GET['search'], $layout); //если в параметре "search" что-то есть
         } else {
             $layout = str_replace('{{ search_input }}', '', $layout); //если в параметре "search" пусто
@@ -137,5 +148,4 @@ switch ($url) {
 
         echo $layout; //выводим все на экран
         break;
-        
 }
