@@ -3,29 +3,63 @@ include "page/header.php";
 
 if (!empty($_SESSION['auth'])) :
 
-    $sender = $_SESSION['login'];
-    $recipient = key($_REQUEST);
+    $user1 = $_SESSION['login'];
+    $user2 = key($_REQUEST);
     $link = require './database/connect.php';
 
-    $selectMessages = $link->query("SELECT * FROM message WHERE recipient='$recipient' AND sender='$sender'");
-    $countRow = mysqli_num_rows($selectMessages);
+    $selectDate = $link->query("SELECT date FROM message WHERE (recipient='$user1' AND sender='$user2') OR (recipient='$user2' AND sender='$user1')");
+    $countRow = mysqli_num_rows($selectDate);
 
     echo "<div class='message__list'>";
 
     if ($countRow > 0) {
+        $days = [];
 
-        for ($data = []; $message = $selectMessages->fetch_assoc(); $data[] = $message) {
+        for ($data = []; $date = $selectDate->fetch_assoc(); $data[] = $date) {
 
-            $date = mb_substr($message['date'], 0, 5);
-            echo "<div class='message__block'><div class='message'><p>{$message['value']}</p><span class='date'>$date</span></div></div>";
+            if (!in_array($date['date'], $days)) {
+                $days[] = $date['date'];
+            }
         }
 
+
+        foreach ($days as $day) {
+
+            echo "<span class='day'>$day</span>";
+            $selectDays = $link->query("SELECT * FROM message WHERE ((recipient='$user1' AND sender='$user2') OR (recipient='$user2' AND sender='$user1')) AND date='$day'");
+
+            for ($data = []; $message = $selectDays->fetch_assoc(); $data[] = $message) {
+
+                if ($message['sender'] == $user1) {
+
+                    $selectUser = $link->query("SELECT name, img FROM user WHERE login='$user2'");
+                    $user = $selectUser->fetch_assoc();
+                    echo "<div class='message__block sender'><div class='message'><div class='message__head'><img src='../upload/{$user['img']}' class='ava__img'><span class='name'>{$user['name']}:</span></div><p>{$message['value']}</p>
+                    <span class='time'>{$message['time']}</span></div></div>";
+                } else {
+
+                    $selectUser = $link->query("SELECT name, img FROM user WHERE login='$user2'");
+                    $user = $selectUser->fetch_assoc();
+                    $name = 'you';
+                    echo "<div class='message__block recipient'><div class='message'><div class='message__head'><img src='../upload/{$user['img']}' class='ava__img'><span class='name'>$name:</span></div><p>{$message['value']}</p>
+                    <span class='time'>{$message['time']}</span></div></div>";
+                }
+            }
+
+        }
     } else {
+
         echo "<div class='empty'><img classs=empty__img' src='../images/empty.png'><span>no messages</span></div>";
     }
-
     echo "</div>";
+
 ?>
+
+    <style>
+        body {
+            background: rgba(0, 0, 0, 0.1);
+        }
+    </style>
 
     <form class="message__form" id="message__form" action="./send_message.php" method="POST">
         <input type="text" name="message" class="message__input"><button class="message__button">send message</button>
@@ -43,7 +77,8 @@ if (!empty($_SESSION['auth'])) :
 <script>
     const title = "message";
 
-
+    var messageList = document.querySelector(".message__list");
+    messageList.scrollTop = messageList.scrollHeight;
 
     let messageForm = document.querySelector('.message__form');
 

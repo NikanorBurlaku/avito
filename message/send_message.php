@@ -6,8 +6,9 @@
         $sender = $_REQUEST['sender'];
         $recipient = $_REQUEST['recipient'];
         $text = $_REQUEST['message'];
-        $date = date('H:i d.m.Y');
+        $date = date('d.m.Y');
+        $time = date('H:i');
         $link->query("INSERT INTO message
-        SET sender = '$sender', recipient='$recipient', value='$text', is_read=false, date='$date'");
+        SET sender = '$sender', recipient='$recipient', value='$text', is_read=false, date='$date', time='$time'");
     }
 ?>
