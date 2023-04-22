@@ -26,6 +26,14 @@ if ($favorite["COUNT(*)"] === '0') {
     $favorite = $favorite["COUNT(*)"];
 }
 
+$selectMessages = $link->query("SELECT COUNT(*) FROM message WHERE to_user='$login'");
+$messages = $selectMessages->fetch_assoc();
+if ($messages["COUNT(*)"] === '0') {
+    $messages = '';
+} else {
+    $messages = $messages["COUNT(*)"];
+}
+
 switch ($url) {
     case '/account/login.php':
         require_once 'account/login.php';
@@ -122,7 +130,7 @@ switch ($url) {
 
         if (!empty($_SESSION['auth'])) { //проверка на авторизацию
             $auth = '<li><a href="{{ url }}account/account.php" id="account" class="header__link">account</a></li>
-            <li><a href="../message/list.php" id="account" class="header__link">messages</a></li>
+            <li><a href="{{ url }}message/list.php" id="account" class="header__link">messages {{ messages }}</a></li>
             <li><a href="{{ url }}account/logout.php" id="logout" class="header__link">log out</a></li>';
             $auth = str_replace('{{ url }}', $page['url'], $auth); //настраиваем путь
         } else {
@@ -144,6 +152,7 @@ switch ($url) {
         $layout = str_replace('{{ favorite }}', $favorite, $layout); // отображение количества избранных сообщений
         $layout = str_replace('{{ auth }}', $auth, $layout); //подставляем ссылки для авторизации/логаута
         $layout = str_replace('{{ admin }}', $admin, $layout); //подставляем ссылки для авторизации/логаута
+        $layout = str_replace('{{ messages }}', $messages, $layout); //отображение количества непрочитанных сообщений
         $layout = str_replace('{{ url }}', $page['url'], $layout); // настраиваем пути
 
         echo $layout; //выводим все на экран

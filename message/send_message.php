@@ -3,12 +3,12 @@
 
         date_default_timezone_set('Europe/Chisinau');
 
-        $sender = $_REQUEST['sender'];
-        $recipient = $_REQUEST['recipient'];
+        $fromUser = $_REQUEST['from_user'];
+        $toUser = $_REQUEST['to_user'];
         $text = $_REQUEST['message'];
         $date = date('d.m.Y');
         $time = date('H:i');
         $link->query("INSERT INTO message
-        SET sender = '$sender', recipient='$recipient', value='$text', is_read=false, date='$date', time='$time'");
+        SET from_user = '$fromUser', to_user='$toUser', value='$text', read_status=false, date='$date', time='$time'");
     }
 ?>

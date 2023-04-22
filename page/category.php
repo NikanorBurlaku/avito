@@ -45,30 +45,9 @@ for ($data = []; $product = $selectProduct->fetch_assoc(); $data[] = $product) {
 
 $content .= '</section>';
 
-$selectCategory = $link->query("SELECT * FROM category ORDER BY name");
-
-$categories = '';
-
-for ($data = []; $row = $selectCategory->fetch_assoc(); $data[] = $row) {
-    $row['name'] = strtolower($row['name']);
-    $categoryHref = str_replace('_', ' ', $row['name']);
-    $categories .= "<li><a href='{{ url }}page/{$row['name']}' class='link__acide main__link'>$categoryHref</a></li>";
-}
-
-$selectFavorite = $link->query("SELECT COUNT(*) FROM favorite WHERE login='$login'");
-    $favorite = $selectFavorite->fetch_assoc();
-
-if ($favorite["COUNT(*)"] === '0') {
-    $favorite = '';
-} else {
-    $favorite = $favorite["COUNT(*)"];
-}
-
 $page = [
     'title' => 'bulletin board',
     'content' => $content,
-    'favorite' => $favorite,
-    'categories' => $categories,
     'url' => '../'
 ];
 
