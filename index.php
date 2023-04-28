@@ -26,7 +26,7 @@ if ($favorite["COUNT(*)"] === '0') {
     $favorite = $favorite["COUNT(*)"];
 }
 
-$selectMessages = $link->query("SELECT COUNT(*) FROM message WHERE to_user='$login'");
+$selectMessages = $link->query("SELECT COUNT(*) FROM message WHERE to_user='$login' AND read_status='0'");
 $messages = $selectMessages->fetch_assoc();
 if ($messages["COUNT(*)"] === '0') {
     $messages = '';
